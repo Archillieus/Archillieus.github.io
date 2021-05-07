@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="多态
+多态，即多种状态（形态）。简单来说，我们可以将多态定义为消息以多种形式显示的能力。多态是以封装和继承为基础的。">
+  
+  <meta property="og:title" content="C&#43;&#43;多态" />
+<meta property="og:description" content="多态
+多态，即多种状态（形态）。简单来说，我们可以将多态定义为消息以多种形式显示的能力。多态是以封装和继承为基础的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a-code-lover.github.io/blog/2019-03/c-%E5%A4%9A%E6%80%81/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-03-29T21:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-03-29T21:00:00&#43;00:00" />
+
+
+
+
+  <title>
+  
+       C&#43;&#43;多态 | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://a-code-lover.github.io/blog/2019-03/c-%E5%A4%9A%E6%80%81/">
+
+  
+  
+
+  
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://a-code-lover.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://a-code-lover.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://a-code-lover.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://a-code-lover.github.io/">
+          
+        <img class="avatar" src="https://a-code-lover.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://a-code-lover.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://a-code-lover.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://a-code-lover.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://a-code-lover.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://a-code-lover.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+      
+        <li><a href="https://a-code-lover.github.io/series/c&#43;&#43;%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>C&#43;&#43;从入门到入门</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">C&#43;&#43;多态</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Mar 29, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>4 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <h3 id="多态">多态</h3>
+<p>多态，即多种状态（形态）。简单来说，我们可以将多态定义为消息以多种形式显示的能力。多态是以封装和继承为基础的。</p>
+<p>常见的场景：<strong>基类的指针或引用指向派生类的对象</strong>。</p>
+<p>C++ 多态分类及实现：</p>
+<ol>
+<li>重载多态（Ad-hoc Polymorphism，编译期）：函数重载、运算符重载</li>
+<li>子类型多态（Subtype Polymorphism，运行期）：虚函数</li>
+<li>参数多态性（Parametric Polymorphism，编译期）：类模板、函数模板</li>
+<li>强制多态（Coercion Polymorphism，编译期/运行期）：基本类型转换、自定义类型转换</li>
+</ol>
+<h3 id="什么是虚函数">什么是虚函数？</h3>
+<p>用<code>virtual</code>修饰成员函数，使其成为虚函数，主要用于实现多态，动态绑定。</p>
+<ol>
+<li>非成员函数不能是虚函数</li>
+<li>static函数不能是函数</li>
+<li>构造函数不能是虚函数</li>
+<li>内联函数不能是变现多态时的虚函数</li>
+<li>类（无论普通类或模板类）的成员模板（本身是模板的成员函数）不能是虚函数</li>
+</ol>
+<p><a href="https://blog.csdn.net/lincyang/article/details/7794513">vitual关键字什么时候可以不写：隐式继承virtual关键字</a></p>
+<h3 id="析构函数定义为虚函数有什么用构造函数可以是虚函数吗在构造函数和析构函数里面可以定义虚函数吗">析构函数定义为虚函数有什么用？构造函数可以是虚函数吗？在构造函数和析构函数里面可以定义虚函数吗？</h3>
+<p>虚析构函数是为了解决基类的指针指向派生类对象，并用基类的指针删除派生类对象。</p>
+<p>构造函数不能是虚函数，因为在调用构造函数时，虚表指针并没有在对象的内存空间中，必须要构造函数调用完成后才会形成虚表指针。</p>
+<p>假设一个派生类的对象进行析构，首先调用了派生类的析构，然后在调用基类的析构时，遇到了一个虚函数，这个时候有两种选择：Plan A是编译器调用这个虚函数的基类版本，那么虚函数则失去了运行时调用正确版本的意义；Plan B是编译器调用这个虚函数的派生类版本，但是此时对象的派生类部分已经完成析构，“数据成员就被视为未定义的值”，这个函数调用会导致未知行为。实际情况中编译器使用的是Plan A，如果虚函数的基类版本不是纯虚实现，不会有严重错误发生，但你依然会困惑虚函数机制失效，说不准又是“一张通往彻夜调试的直达车票”，所以Effective C++建议不要这么干。</p>
+<h3 id="虚函数是针对对象还是类虚函数是如何实现的虚函数指针和虚函数表的关系">虚函数是针对对象还是类？虚函数是如何实现的？虚函数指针和虚函数表的关系？</h3>
+<p>编译器会为每个有虚函数的类创建一个<code>虚函数表</code>，该虚函数表将被该类的所有对象共享。类的每个虚成员占据虚函数表中的一行。如果类中有N个虚函数，那么其虚函数表将有N*4字节的大小。类的每个对象都有一个指向虚函数表的指针(<code>虚指针</code>)。<br>
+编译器应该是保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证取到虚函数表的有最高的性能——如果有多层继承或是多重继承的情况下）。 这意味着可以通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。虚函数表存放的位置不同编译器还不一样。</p>
+<p><img src="./img/%E8%99%9A%E6%8C%87%E9%92%88.png" alt="虚指针">
+<img src="./img/%E7%88%B6%E7%B1%BB%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8.png" alt="父类虚函数表">
+<img src="./img/%E5%AD%90%E7%B1%BB%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8.png" alt="子类虚函数表"><br>
+参考：<a href="https://www.jianshu.com/p/5d6edcb3b83e">https://www.jianshu.com/p/5d6edcb3b83e</a></p>
+<h3 id="纯虚函数和虚函数有什么区别">纯虚函数和虚函数有什么区别？</h3>
+<p>1.纯虚函数是一种特殊的虚函数，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数<code>= 0；</code>，它的实现留给该基类的派生类去做。<br>
+2.虚函数在基类提供实现，在子类可以重载也可以不重载，而纯虚函数只是一个接口，不能在基类提供实现，必须在子类实现。<br>
+3.带有纯虚函数的类称为抽象类，抽象类不能直接生成对象，只有被继承，重写虚函数后才能使用。虚基类：</p>
+<h3 id="虚继承和虚基类菱形继承">虚继承和虚基类？菱形继承？</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">CBase</span> <span class="p">{</span> <span class="p">}</span><span class="err">；</span>
+<span class="k">class</span> <span class="nc">CDerive1</span><span class="err">：</span><span class="k">virtual</span> <span class="k">public</span> <span class="n">CBase</span><span class="p">{</span> <span class="p">}</span><span class="err">；</span>
+<span class="k">class</span> <span class="nc">CDerive2</span><span class="err">：</span><span class="k">virtual</span> <span class="k">public</span> <span class="n">CBase</span><span class="p">{</span> <span class="p">}</span><span class="err">；</span>
+<span class="k">class</span> <span class="nc">CDerive12</span><span class="err">：</span><span class="k">public</span> <span class="n">CDerive1</span><span class="err">，</span><span class="n">CDerive2</span><span class="p">{</span> <span class="p">}</span><span class="err">；</span>
+</code></pre></div><p>虚基类是用关键字virtual声明继承的父类，即便该基类在多条链路上被一个子类继承，但是该子类中只包含一个该虚基类的备份，虚基类主要用来解<code>菱形继承</code>中的二义性问题，这就是是虚基类的作用所在。<br>
+正是由于虚基类的这个作用，所以在每个子类的构造函数中必须显示的调用该虚基类的构造函数，不管该虚基类是不是直接的父类。<br>
+其次，虚基类的构造函数的调用早于其他非虚基类的构造函数的调用。</p>
+<p>参考：
+<a href="https://www.oschina.net/translate/cpp-virtual-inheritance">多继承，虚继承的内存环境</a>
+<a href="https://blog.csdn.net/chlele0105/article/details/22654869">https://blog.csdn.net/chlele0105/article/details/22654869</a></p>
+<h3 id="虚函数可以内联吗">虚函数可以内联吗？</h3>
+<p>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。
+内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。
+inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</p>
+<h3 id="抽象类接口类聚合类">抽象类、接口类、聚合类</h3>
+<p>抽象类：含有纯虚函数的类
+接口类：仅含有纯虚函数的抽象类
+聚合类：用户可以直接访问其成员，并且具有特殊的初始化语法形式。满足如下特点：</p>
+<ul>
+<li>所有成员都是 public</li>
+<li>没有有定于任何构造函数</li>
+<li>没有类内初始化</li>
+<li>没有基类，也没有 virtual 函数</li>
+</ul>
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://a-code-lover.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://a-code-lover.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://a-code-lover.github.io/blog/2019-03/c-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>C&#43;&#43;智能指针</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+                <a href=https://a-code-lover.github.io/blog/2019-04/c-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>C&#43;&#43;函数指针</span>
+                  </div>
+                </a>
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a4%9a%e6%80%81">
+												 多态
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e8%99%9a%e5%87%bd%e6%95%b0">
+												 什么是虚函数？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%9e%90%e6%9e%84%e5%87%bd%e6%95%b0%e5%ae%9a%e4%b9%89%e4%b8%ba%e8%99%9a%e5%87%bd%e6%95%b0%e6%9c%89%e4%bb%80%e4%b9%88%e7%94%a8%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%8f%af%e4%bb%a5%e6%98%af%e8%99%9a%e5%87%bd%e6%95%b0%e5%90%97%e5%9c%a8%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e5%92%8c%e6%9e%90%e6%9e%84%e5%87%bd%e6%95%b0%e9%87%8c%e9%9d%a2%e5%8f%af%e4%bb%a5%e5%ae%9a%e4%b9%89%e8%99%9a%e5%87%bd%e6%95%b0%e5%90%97">
+												 析构函数定义为虚函数有什么用？构造函数可以是虚函数吗？在构造函数和析构函数里面可以定义虚函数吗？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%99%9a%e5%87%bd%e6%95%b0%e6%98%af%e9%92%88%e5%af%b9%e5%af%b9%e8%b1%a1%e8%bf%98%e6%98%af%e7%b1%bb%e8%99%9a%e5%87%bd%e6%95%b0%e6%98%af%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e7%9a%84%e8%99%9a%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88%e5%92%8c%e8%99%9a%e5%87%bd%e6%95%b0%e8%a1%a8%e7%9a%84%e5%85%b3%e7%b3%bb">
+												 虚函数是针对对象还是类？虚函数是如何实现的？虚函数指针和虚函数表的关系？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ba%af%e8%99%9a%e5%87%bd%e6%95%b0%e5%92%8c%e8%99%9a%e5%87%bd%e6%95%b0%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab">
+												 纯虚函数和虚函数有什么区别？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%99%9a%e7%bb%a7%e6%89%bf%e5%92%8c%e8%99%9a%e5%9f%ba%e7%b1%bb%e8%8f%b1%e5%bd%a2%e7%bb%a7%e6%89%bf">
+												 虚继承和虚基类？菱形继承？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%99%9a%e5%87%bd%e6%95%b0%e5%8f%af%e4%bb%a5%e5%86%85%e8%81%94%e5%90%97">
+												 虚函数可以内联吗？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8a%bd%e8%b1%a1%e7%b1%bb%e6%8e%a5%e5%8f%a3%e7%b1%bb%e8%81%9a%e5%90%88%e7%b1%bb">
+												 抽象类、接口类、聚合类
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://a-code-lover.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://a-code-lover.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://a-code-lover.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>进程 on Archillieus</title>
+    <link>https://a-code-lover.github.io/tags/%E8%BF%9B%E7%A8%8B/</link>
+    <description>Recent content in 进程 on Archillieus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Wed, 10 Apr 2019 09:43:48 +0800</lastBuildDate><atom:link href="https://a-code-lover.github.io/tags/%E8%BF%9B%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43;进程</title>
+      <link>https://a-code-lover.github.io/blog/2019-04/c-%E8%BF%9B%E7%A8%8B/</link>
+      <pubDate>Wed, 10 Apr 2019 09:43:48 +0800</pubDate>
+      
+      <guid>https://a-code-lover.github.io/blog/2019-04/c-%E8%BF%9B%E7%A8%8B/</guid>
+      <description>&lt;p&gt;引语：C++11的一个重要特性就是对多线程的支持。这意味着使用C++编写与平台无关的多线程程序成为可能，也为可移植性提供了强有力的保证。与此同时，程序员们为提高应用的性能，对并发的关注也是与日俱增，特别在多线程编程方面。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

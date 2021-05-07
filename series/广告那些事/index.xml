@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>广告那些事 on Archillieus</title>
+    <link>https://a-code-lover.github.io/series/%E5%B9%BF%E5%91%8A%E9%82%A3%E4%BA%9B%E4%BA%8B/</link>
+    <description>Recent content in 广告那些事 on Archillieus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Thu, 13 Jun 2019 21:16:00 +0800</lastBuildDate><atom:link href="https://a-code-lover.github.io/series/%E5%B9%BF%E5%91%8A%E9%82%A3%E4%BA%9B%E4%BA%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开发工具Gflags,Glog,Protobuf</title>
+      <link>https://a-code-lover.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/</link>
+      <pubDate>Thu, 13 Jun 2019 21:16:00 +0800</pubDate>
+      
+      <guid>https://a-code-lover.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/</guid>
+      <description>&lt;p&gt;GFlags是Google开源的一个命令行flag（区别于参数）库。简单来说就是在使用命令行时，可以根据名称设置参数。Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。Google Protocol Buffer(简称 Protobuf)是Google公司内部的混合语言数据标准。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>互联网广告_概述</title>
+      <link>https://a-code-lover.github.io/blog/2019-06/%E4%BA%92%E8%81%94%E7%BD%91%E5%B9%BF%E5%91%8A_%E6%A6%82%E8%BF%B0/</link>
+      <pubDate>Tue, 11 Jun 2019 20:50:00 +0800</pubDate>
+      
+      <guid>https://a-code-lover.github.io/blog/2019-06/%E4%BA%92%E8%81%94%E7%BD%91%E5%B9%BF%E5%91%8A_%E6%A6%82%E8%BF%B0/</guid>
+      <description>&lt;h1 id=&#34;互联网广告平台概述&#34;&gt;互联网广告平台概述&lt;/h1&gt;
+&lt;p&gt;日常常见广告形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;电视广告：广告片，标板，赞助，冠名，电视信息片，贴片，走马字幕等&lt;/li&gt;
+&lt;li&gt;网络广告&lt;/li&gt;
+&lt;li&gt;广播广告&lt;/li&gt;
+&lt;li&gt;报纸杂志&lt;/li&gt;
+&lt;li&gt;户外广告&lt;/li&gt;
+&lt;li&gt;交通广告&lt;/li&gt;
+&lt;li&gt;电影广告&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

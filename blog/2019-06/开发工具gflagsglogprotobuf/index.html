@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="GFlags是Google开源的一个命令行flag（区别于参数）库。简单来说就是在使用命令行时，可以根据名称设置参数。Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。Google Protocol Buffer(简称 Protobuf)是Google公司内部的混合语言数据标准。">
+  
+  <meta property="og:title" content="开发工具Gflags,Glog,Protobuf" />
+<meta property="og:description" content="GFlags是Google开源的一个命令行flag（区别于参数）库。简单来说就是在使用命令行时，可以根据名称设置参数。Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。Google Protocol Buffer(简称 Protobuf)是Google公司内部的混合语言数据标准。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a-code-lover.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-06-13T21:16:00&#43;08:00" />
+<meta property="article:modified_time" content="2019-06-13T21:16:00&#43;08:00" />
+
+
+
+
+  <title>
+  
+       开发工具Gflags,Glog,Protobuf | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://a-code-lover.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/">
+
+  
+  
+
+  
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://a-code-lover.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://a-code-lover.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://a-code-lover.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://a-code-lover.github.io/">
+          
+        <img class="avatar" src="https://a-code-lover.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://a-code-lover.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://a-code-lover.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://a-code-lover.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://a-code-lover.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://a-code-lover.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+      
+        <li><a href="https://a-code-lover.github.io/series/%E5%B9%BF%E5%91%8A%E9%82%A3%E4%BA%9B%E4%BA%8B"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>广告那些事</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">开发工具Gflags,Glog,Protobuf</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Jun 13, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>6 minutes read</li>
+    
+  </ul>
+  
+    <div class="view">
+      <img src="https://a-code-lover.github.io/images/blog/2019-06/0613.jpg" />
+    </div>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <p>GFlags是Google开源的一个命令行flag（区别于参数）库。简单来说就是在使用命令行时，可以根据名称设置参数。Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。Google Protocol Buffer(简称 Protobuf)是Google公司内部的混合语言数据标准。</p>
+<h2 id="gflags库">GFlags库</h2>
+<p>GFlags是Google开源的一个命令行flag（区别于参数）库。flag的定义可以散布在各个源码中，而不用放在一起。一个源码文件可以定义一些它自己的flag，链接了该文件的应用都能使用这些flag。这样就能非常方便地复用代码。<strong>如果不同的文件定义了相同的flag，链接时会报错</strong>。
+GFlags是一个C++库，同时也有一个Python移植，使用完全相同的接口。</p>
+<p>简单来说就是在使用命令行时，可以根据名称设置参数。</p>
+<h3 id="支持参数格式">支持参数格式</h3>
+<ul>
+<li>DEFINE_bool: boolean</li>
+<li>DEFINE_int32: 32-bit integer</li>
+<li>DEFINE_int64: 64-bit integer</li>
+<li>DEFINE_uint64: unsigned 64-bit integer</li>
+<li>DEFINE_double: double</li>
+<li>DEFINE_string: C++ string</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;gflags/gflags.h&gt;</span><span class="cp">
+</span><span class="cp"></span><span class="c1">//命令行参数名，参数默认值，参数帮组信息
+</span><span class="c1"></span><span class="n">DEFINE_bool</span><span class="p">(</span><span class="n">big_menu</span><span class="p">,</span> <span class="nb">true</span><span class="p">,</span> <span class="s">&#34;Include &#39;advanced&#39; options in the menu listing&#34;</span><span class="p">);</span>
+<span class="n">DEFINE_string</span><span class="p">(</span><span class="n">languages</span><span class="p">,</span> <span class="s">&#34;english,french,german&#34;</span><span class="p">,</span> <span class="s">&#34;comma-separated list of languages to offer in the &#39;lang&#39; menu&#34;</span><span class="p">);</span>
+<span class="c1">//访问外部参数
+</span><span class="c1"></span><span class="n">DECLARE_bool</span><span class="p">(</span><span class="n">big_m</span><span class="p">)</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//处理命令行参数，传入指针，会改变参数值，
+</span><span class="c1"></span>  <span class="c1">//第三个参数是removeflags参数。若设置为true，表示解析后将flag以及flag对应的值从argv中删除，并相应的修改argc，即最后存放的是不包含flag的参数。如果设置为false，则仅对参数进行重排，标志位参数放在最前面。
+</span><span class="c1"></span>  <span class="n">google</span><span class="o">::</span><span class="n">ParseCommandLineFlags</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;argc=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">argc</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">FLAGS_big_menu</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//通过FLAGS_前缀进行访问
+</span><span class="c1"></span>	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;big menu is ture&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;big menu is flase&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;languages=&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">FLAGS_languages</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="提供多种命令行设置参数的形式">提供多种命令行设置参数的形式：</h3>
+<p><code>app_containing_foo --languages=&quot;chinese,japanese,korean&quot;</code>
+<code>app_containing_foo -languages=&quot;chinese,japanese,korean&quot;</code>
+<code>app_containing_foo --languages &quot;chinese,japanese,korean&quot;</code>
+<code>app_containing_foo -languages &quot;chinese,japanese,korean&quot;</code></p>
+<p>在命令行传入&ndash;flagfile或者在程序里设置flagfile以解析文件中的flags。
+<code>google::SetCommandLineOption(&quot;flagfile&quot;, &quot;gflags_sample.flags&quot;);</code></p>
+<h3 id="特殊标志">特殊标志</h3>
+<ul>
+<li>&ndash;help  显示文件中所有标识的完整帮助信息</li>
+<li>&ndash;helpfull  和-help 一样，</li>
+<li>&ndash;helpshort  只显示当前执行文件里的标志</li>
+<li>&ndash;helpxml  以 xml 凡是打印，方便处理</li>
+<li>&ndash;version  打印版本信息，由 google::SetVersionString()设定</li>
+<li>&ndash;flagfile  -flagfile=f 从文件 f 中读取命令行参数</li>
+</ul>
+<h2 id="glog">Glog</h2>
+<p>Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。 它提供了一系列类似于C++流风格的logging API，以及各种辅助的宏。你可以按级别打印日志，通过命令行控制日志行为，按条件打印日志，不满足条件时终止程序，引入自定义的日志级别等等。在安装 glog 之前需要先安装 gflags，这样 glog 就可以使用 gflags 去解析命令行参数</p>
+<h3 id="日志级别">日志级别</h3>
+<p>打印日志只需以流的形式传给<code>LOG(level)</code>,glog支持的日志级别分为<code>INFO</code>,<code>WARNING</code>,<code>ERROR</code>,<code>FATAL</code>。打印<code>FATAL</code>消息会在打印完成后终止程序。和其他日志库类似，级别更高的日志会在同级别和所有低级别的日志文件中打印。调试模式时<code>FATAL</code>会降级为error而不终止程序。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;glog/logging.h&#34;   // glog头文件</span><span class="cp">
+</span><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">google</span><span class="o">::</span><span class="n">InitGoogleLogging</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>    <span class="c1">// 初始化
+</span><span class="c1"></span>  <span class="c1">// FLAGS_log_dir=&#34;.&#34;;
+</span><span class="c1"></span>  <span class="n">LOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;hello glog&#34;</span><span class="p">;</span>
+  <span class="n">CHECK</span><span class="p">(</span><span class="n">fun</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Call fun() failed!&#34;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>glog 提供了CHECK()宏帮助我们检查程序的错误，当CHECK()的条件不满足时，它会记录FATAL日志并终止程序：</p>
+<h3 id="设置flag">设置flag</h3>
+<p>默认情况下，glog 会将日志输出到<code>/tmp</code>目录下，通过<code>log_dir</code>标志修改日志目录。常用的flag有：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>取值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&ndash;logtostderr</td>
+<td>bool ，默认为 false</td>
+<td>日志输出到stderr，不输出到日志文件</td>
+</tr>
+<tr>
+<td>&ndash;colorlogtostderr</td>
+<td>bool,默认为 false</td>
+<td>输出彩色日志到stderr</td>
+</tr>
+<tr>
+<td>&ndash;stderrthreshold</td>
+<td>int ，默认为2，即 ERROR</td>
+<td>将大于等于该级别的日志同时输出到stderr。日志级别 INFO, WARNING, ERROR, FATAL 的值分别为0、1、2、3</td>
+</tr>
+<tr>
+<td>&ndash;minloglevel</td>
+<td>int ，默认为0，即 INFO</td>
+<td>打印大于等于该级别的日志。日志级别的值同上</td>
+</tr>
+<tr>
+<td>&ndash;log_dir</td>
+<td>string ，默认为 &quot;&quot;</td>
+<td>指定输出日志文件的目录</td>
+</tr>
+<tr>
+<td>&ndash;v</td>
+<td>int ，默认为0</td>
+<td>显示所有 VLOG(m) 的日志， m 小于等于该flag的值。会被 &ndash;vmodule 覆盖</td>
+</tr>
+<tr>
+<td>&ndash;vmodule</td>
+<td>string ，默认为 &quot;&quot;</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="按条件次数打印">按条件/次数打印</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="c1">//在num&gt;10时打印
+</span><span class="c1"></span><span class="n">LOG_IF</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="n">num_cookies</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Got lots of cookies&#34;</span><span class="p">;</span>
+<span class="c1">//代码每执行10次打印，在1，11，21...打印
+</span><span class="c1"></span><span class="n">LOG_EVERY_N</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Got the &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">google</span><span class="o">::</span><span class="n">COUNTER</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;th cookie&#34;</span><span class="p">;</span>
+<span class="n">LOG_IF_EVERY_N</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="p">(</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">1024</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Got the &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">google</span><span class="o">::</span><span class="n">COUNTER</span>
+										<span class="o">&lt;&lt;</span> <span class="s">&#34;th big cookie&#34;</span><span class="p">;</span>
+<span class="c1">//前20次打印
+</span><span class="c1"></span><span class="n">LOG_FIRST_N</span><span class="p">(</span><span class="n">INFO</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Got the &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">google</span><span class="o">::</span><span class="n">COUNTER</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;th cookie&#34;</span><span class="p">;</span>
+<span class="c1">//调试模式，上面的命令都可以加前缀D
+</span><span class="c1"></span><span class="n">DLOG</span><span class="p">(</span><span class="n">INFO</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Found cookies&#34;</span><span class="p">;</span>
+</code></pre></div><h3 id="细节日志">细节日志</h3>
+<p>当你在追比较复杂的bug的时候，详细的日志信息非常有用。但同时，在通常开发中需要忽略太详细的信息。对这种细节日志的需求，Glog提供了<code>VLOG</code>宏（<strong>可以在条件打印加前缀V，如VLOG_IF</strong>），使你可以自定义一些日志级别。通过 &ndash;v 可以控制输出的细节日志。对 VLOG 宏和 &ndash;v flag可以指定任何整数，但通常使用较小的正整数。<code>VLOG</code>的日志级别是 INFO 。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">VLOG</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;I&#39;m printed when you run the program with --v=1 or higher&#34;</span><span class="p">;</span>
+<span class="n">VLOG</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;I&#39;m printed when you run the program with --v=2 or higher&#34;</span><span class="p">;</span>
+</code></pre></div><h3 id="性能">性能</h3>
+<p>Glog提供的条件日志宏（比如 CHECK, LOG_IF, VLOG, &hellip; ）在条件判断失败时，不会执行右边表达式。因此像下面这样的检查不会牺牲程序的性能。
+<code>CHECK(obj.ok) &lt;&lt; obj.CreatePrettyFormattedStringButVerySlow();</code></p>
+<h2 id="protobuf">Protobuf</h2>
+<p>Google Protocol Buffer(简称 Protobuf) 是Google公司内部的混合语言数据标准，是一种语言中立，平台无关，可扩展的序列化数据的格式，可用于RPC系统和持续数据存储系统等。</p>
+<p>相比于 XML 来说，Protocol buffers 更加小巧，更加快速，更加简单。一旦定义了要处理的数据的数据结构之后，就可以利用 Protocol buffers 的代码生成工具生成相关的代码。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用 Protobuf 对数据结构进行一次描述，即可利用各种不同语言或从各种不同数据流中对你的结构化数据轻松读写。</p>
+<p>protocol buffers诞生之初是为了解决服务器端新旧协议(高低版本)兼容性问题，名字也很体贴，“协议缓冲区”。只不过后期慢慢发展成用于传输数据。</p>
+<h3 id="写proto文件">写.proto文件</h3>
+<pre><code>//命名：lm.helloworld.proto
+package lm;
+message helloworld
+{
+   required int32     id = 1;  // ID
+   required string    str = 2;  // str
+   optional int32     opt = 3;  //optional field
+}
+</code></pre><h3 id="编译proto文件">编译.proto文件</h3>
+<p><code>protoc -I=$SRC_DIR --cpp_out=$DST_DIR $SRC_DIR/addressbook.proto</code></p>
+<p>生成：<code>lm.helloworld.pb.h</code>和<code>lm.helloworld.pb.cc</code></p>
+<h3 id="编写writer和reader">编写writer和reader</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&#34;lm.helloworld.pb.h&#34;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="n">lm</span><span class="o">::</span><span class="n">helloworld</span> <span class="n">msg1</span><span class="p">;</span>
+<span class="n">msg1</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="mi">101</span><span class="p">);</span>
+<span class="n">msg1</span><span class="p">.</span><span class="n">set_str</span><span class="p">(</span><span class="err">“</span><span class="n">hello</span><span class="err">”</span><span class="p">);</span>
+
+<span class="c1">// Write the new address book back to disk.
+</span><span class="c1"></span><span class="n">fstream</span> <span class="n">output</span><span class="p">(</span><span class="s">&#34;./log&#34;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">trunc</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">msg1</span><span class="p">.</span><span class="n">SerializeToOstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">output</span><span class="p">))</span> <span class="p">{</span>
+	<span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Failed to write msg.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+	<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&#34;lm.helloworld.pb.h&#34;</span><span class="cp">
+</span><span class="cp"></span><span class="kt">void</span> <span class="nf">ListMsg</span><span class="p">(</span><span class="k">const</span> <span class="n">lm</span><span class="o">::</span><span class="n">helloworld</span> <span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span><span class="p">.</span><span class="n">id</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">msg</span><span class="p">.</span><span class="n">str</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+	<span class="n">lm</span><span class="o">::</span><span class="n">helloworld</span> <span class="n">msg1</span><span class="p">;</span>
+  <span class="p">{</span>
+	<span class="n">fstream</span> <span class="n">input</span><span class="p">(</span><span class="s">&#34;./log&#34;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">msg1</span><span class="p">.</span><span class="n">ParseFromIstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">input</span><span class="p">))</span> <span class="p">{</span>
+		<span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Failed to parse address book.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+	<span class="p">}</span>
+  <span class="p">}</span>
+	<span class="n">ListMsg</span><span class="p">(</span><span class="n">msg1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><p>PS.编译的知识有点难，没看。</p>
+<p>参考：
+<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html">概述</a>
+<a href="https://halfrost.com/protobuf_encode/">细节</a></p>
+<p>.ini文件，Windows系统采用的系统配置文件，一般可通过图形化窗口进行编辑，也可直接编辑，一般存放软件信息、注册表信息等。</p>
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://a-code-lover.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://a-code-lover.github.io/tags/%E5%B7%A5%E5%85%B7%E5%BA%93" role="button">工具库 </a></li>
+      
+    
+      <li><a href="https://a-code-lover.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://a-code-lover.github.io/blog/2019-06/%E4%BA%92%E8%81%94%E7%BD%91%E5%B9%BF%E5%91%8A_%E6%A6%82%E8%BF%B0/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>互联网广告_概述</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#gflags%e5%ba%93">
+												 GFlags库
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%94%af%e6%8c%81%e5%8f%82%e6%95%b0%e6%a0%bc%e5%bc%8f">
+												 支持参数格式
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8f%90%e4%be%9b%e5%a4%9a%e7%a7%8d%e5%91%bd%e4%bb%a4%e8%a1%8c%e8%ae%be%e7%bd%ae%e5%8f%82%e6%95%b0%e7%9a%84%e5%bd%a2%e5%bc%8f">
+												 提供多种命令行设置参数的形式：
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%89%b9%e6%ae%8a%e6%a0%87%e5%bf%97">
+												 特殊标志
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#glog">
+												 Glog
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%97%a5%e5%bf%97%e7%ba%a7%e5%88%ab">
+												 日志级别
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%ae%be%e7%bd%aeflag">
+												 设置flag
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8c%89%e6%9d%a1%e4%bb%b6%e6%ac%a1%e6%95%b0%e6%89%93%e5%8d%b0">
+												 按条件/次数打印
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%bb%86%e8%8a%82%e6%97%a5%e5%bf%97">
+												 细节日志
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%80%a7%e8%83%bd">
+												 性能
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#protobuf">
+												 Protobuf
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%99proto%e6%96%87%e4%bb%b6">
+												 写.proto文件
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%bc%96%e8%af%91proto%e6%96%87%e4%bb%b6">
+												 编译.proto文件
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%bc%96%e5%86%99writer%e5%92%8creader">
+												 编写writer和reader
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://a-code-lover.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://a-code-lover.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://a-code-lover.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>

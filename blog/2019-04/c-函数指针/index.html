@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="函数指针：指向函数的指针，首先它是指针变量(同指向一个整形变量、字符、数组一样)，其次它指向一个函数（地址）。">
+  
+  <meta property="og:title" content="C&#43;&#43;函数指针" />
+<meta property="og:description" content="函数指针：指向函数的指针，首先它是指针变量(同指向一个整形变量、字符、数组一样)，其次它指向一个函数（地址）。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a-code-lover.github.io/blog/2019-04/c-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-04-01T21:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-04-01T21:00:00&#43;00:00" />
+
+
+
+
+  <title>
+  
+       C&#43;&#43;函数指针 | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://a-code-lover.github.io/blog/2019-04/c-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">
+
+  
+  
+
+  
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://a-code-lover.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://a-code-lover.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://a-code-lover.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://a-code-lover.github.io/">
+          
+        <img class="avatar" src="https://a-code-lover.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://a-code-lover.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://a-code-lover.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://a-code-lover.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://a-code-lover.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://a-code-lover.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+      
+        <li><a href="https://a-code-lover.github.io/series/c&#43;&#43;%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>C&#43;&#43;从入门到入门</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">C&#43;&#43;函数指针</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Apr 1, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>2 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <p>函数指针：指向函数的指针，首先它是指针变量(同指向一个整形变量、字符、数组一样)，其次它指向一个函数（地址）。</p>
+<h3 id="普通函数指针">普通函数指针</h3>
+<p>c语言函数指针的定义形式：<code>返回类型 (*函数指针名称)(参数类型,参数类型,参数类型，…);</code><br>
+c++函数指针的定义形式：<code>返回类型 （类名称::*函数成员名称）（参数类型，参数类型，参数类型，….);</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">funP</span><span class="p">)(</span><span class="kt">int</span><span class="p">);</span>   <span class="c1">//声明也可写成void(*funP)(int x)，但习惯上一般不这样。
+</span><span class="c1"></span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">funA</span><span class="p">)(</span><span class="kt">int</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">myFun</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">){}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">//一般的函数调用
+</span><span class="c1"></span>    <span class="n">myFun</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+
+    <span class="n">funP</span><span class="o">=&amp;</span><span class="n">myFun</span><span class="p">;</span>  <span class="c1">//将myFun函数的地址赋给funP变量
+</span><span class="c1"></span>    <span class="p">(</span><span class="o">*</span><span class="n">funP</span><span class="p">)(</span><span class="mi">200</span><span class="p">);</span>  <span class="c1">//通过函数指针变量来调用函数
+</span><span class="c1"></span>
+    <span class="n">funA</span><span class="o">=</span><span class="n">myFun</span><span class="p">;</span>
+    <span class="n">funA</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>
+
+    <span class="c1">// myFun的函数名与funP、funA函数指针都是一样的，即都是函数指针。
+</span><span class="c1"></span>    <span class="c1">// myFun函数名是一个函数指针常量，而funP、funA是函数数指针变量，这是它们的关系。
+</span><span class="c1"></span>    <span class="c1">// 转：函数名调用如果都得如(*myFun)(10)这样，那书写与读起来都是不方便和不习惯的。所以C语言的设计者们才会
+</span><span class="c1"></span>    <span class="c1">// 设计成又可允许myFun(10)这种形式地调用（这样方便多了，并与数学中的函数形式一样）。
+</span><span class="c1"></span>    <span class="n">funP</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span>
+    <span class="p">(</span><span class="o">*</span><span class="n">funA</span><span class="p">)(</span><span class="mi">600</span><span class="p">);</span>
+    <span class="p">(</span><span class="o">*</span><span class="n">myFun</span><span class="p">)(</span><span class="mi">1000</span><span class="p">);</span>
+
+    <span class="k">typedef</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">fp</span><span class="p">)(</span><span class="kt">int</span> <span class="n">a</span><span class="p">);</span> <span class="c1">//typedef简化函数指针定义
+</span><span class="c1"></span>    <span class="n">fp</span> <span class="n">f</span> <span class="o">=</span> <span class="n">myFun</span><span class="p">;</span>
+    <span class="n">fp</span> <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">funP</span><span class="p">,</span> <span class="n">funA</span><span class="p">,</span> <span class="n">myFun</span><span class="p">};</span> <span class="c1">//构造函数指针数组
+</span><span class="c1"></span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="成员函数指针">成员函数指针</h3>
+<ol>
+<li>函数指针赋值要使用<code>&amp;</code>，<code>返回类型 (classname::*fptrname)(参数列表) = &amp;classname::funcname;</code></li>
+<li>使用<code>object.*fptrname(参数)</code>(实例对象)或者<code>objectptr-&gt;*(参数)</code>（实例对象指针）调用类成员函数指针所指向的函数</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="nf">setA</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">B</span><span class="o">:</span><span class="k">public</span> <span class="n">A</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="nf">setB</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">A</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">B</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="n">A</span><span class="o">::*</span><span class="n">ptr</span><span class="p">)(</span><span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">setA</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="n">A</span><span class="o">::*</span><span class="n">vptr</span><span class="p">)()</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">print</span><span class="p">;</span>
+    <span class="n">A</span><span class="o">*</span> <span class="n">pa</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+
+    <span class="c1">//对于非虚函数，返回其在内存的真实地址
+</span><span class="c1"></span>    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;A::set(): %p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">setA</span><span class="p">);</span>
+    <span class="c1">//对于虚函数， 返回其在虚函数表的偏移位置
+</span><span class="c1"></span>    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;B::print(): %p</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">print</span><span class="p">);</span>
+
+    <span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+    <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="o">*</span><span class="n">ptr</span><span class="p">)(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">(</span><span class="n">pa</span><span class="o">-&gt;*</span><span class="n">ptr</span><span class="p">)(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="静态成员函数指针">静态成员函数指针</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">funcA</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="nf">funcB</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="p">(</span><span class="n">A</span><span class="o">::*</span><span class="n">p1</span><span class="p">)();</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">p2</span><span class="p">)();</span>
+
+    <span class="n">A</span><span class="p">(){</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">funA</span><span class="p">;</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">funB</span><span class="p">;</span>
+
+        <span class="c1">//p1 =&amp;A::funb;//error
+</span><span class="c1"></span>        <span class="c1">//p2 =&amp;A::funa;//error
+</span><span class="c1"></span>        <span class="c1">//p1=&amp;funa;//error,编译器错误 C2276
+</span><span class="c1"></span>        <span class="c1">//p2=&amp;funb;//error,编译器错误 C2276
+</span><span class="c1"></span>    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">A</span> <span class="n">a</span><span class="p">;</span>
+    <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">p1</span><span class="p">)();</span> <span class="c1">//打印A，这个语法太过分了！！！！
+</span><span class="c1"></span>
+    <span class="kt">void</span> <span class="p">(</span><span class="n">A</span><span class="o">::*</span><span class="n">p</span><span class="p">)()</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">p1</span><span class="p">;</span>
+    <span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="o">*</span><span class="n">p</span><span class="p">)();</span>
+
+    <span class="cm">/*尽管a.p2本身是个非static变量,但是a.p2是指向static函数的函数指针，
+</span><span class="cm">        **所以下面这就话是错的!
+</span><span class="cm">        */</span>
+    <span class="c1">//p = a.p2;//error
+</span><span class="c1"></span>    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">pp</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">A</span><span class="o">::</span><span class="n">funb</span><span class="p">;</span>
+    <span class="n">pp</span><span class="p">();</span> <span class="c1">//打印 B
+</span><span class="c1"></span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><p>参考：<a href="http://www.runoob.com/w3cnote/cpp-func-pointer.html">http://www.runoob.com/w3cnote/cpp-func-pointer.html</a></p>
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://a-code-lover.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://a-code-lover.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://a-code-lover.github.io/blog/2019-03/c-%E5%A4%9A%E6%80%81/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>C&#43;&#43;多态</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+                <a href=https://a-code-lover.github.io/blog/2019-04/c-%E8%BF%9B%E7%A8%8B/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>C&#43;&#43;进程</span>
+                  </div>
+                </a>
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ae%e9%80%9a%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88">
+												 普通函数指针
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%88%90%e5%91%98%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88">
+												 成员函数指针
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%9d%99%e6%80%81%e6%88%90%e5%91%98%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88">
+												 静态成员函数指针
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://a-code-lover.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://a-code-lover.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://a-code-lover.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>

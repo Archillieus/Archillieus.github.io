@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="《C&#43;&#43;primer》作为C&#43;&#43;入门的一本推荐书籍，对于掌握C&#43;&#43;的基本语法和特性还是很有帮助的。">
+  
+  <meta property="og:title" content="《C&#43;&#43; primer》选读" />
+<meta property="og:description" content="《C&#43;&#43;primer》作为C&#43;&#43;入门的一本推荐书籍，对于掌握C&#43;&#43;的基本语法和特性还是很有帮助的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://a-code-lover.github.io/blog/2019-04/c-primer%E9%80%89%E8%AF%BB/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-04-17T09:43:48&#43;08:00" />
+<meta property="article:modified_time" content="2019-04-17T09:43:48&#43;08:00" />
+
+
+
+  <title>
+  
+       《C&#43;&#43; primer》选读 | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://a-code-lover.github.io/blog/2019-04/c-primer%E9%80%89%E8%AF%BB/">
+
+  
+  
+
+  
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://a-code-lover.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://a-code-lover.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://a-code-lover.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://a-code-lover.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://a-code-lover.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://a-code-lover.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://a-code-lover.github.io/">
+          
+        <img class="avatar" src="https://a-code-lover.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://a-code-lover.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://a-code-lover.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://a-code-lover.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://a-code-lover.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://a-code-lover.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://a-code-lover.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://a-code-lover.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+  </ul>
+
+  <div class="px-4 post-heading">《C&#43;&#43; primer》选读</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Apr 17, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>28 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <p>《C++primer》作为C++入门的一本推荐书籍，对于掌握C++的基本语法和特性还是很有帮助的。</p>
+<h2 id="第二章变量与类型">第二章：变量与类型</h2>
+<h3 id="类型系统">类型系统</h3>
+<blockquote>
+<ul>
+<li>一般float和double分别是7，16个有效位。</li>
+<li>类型char实际上会表现为signed char还是unsigned char，由编译器决定。</li>
+<li>c++的设计原则之一是尽可能接近硬件。。。</li>
+<li>避免无法预知和依赖于实现环境的行为。</li>
+<li>运算符运算之前会先将运算参数转换为同样的类型。</li>
+<li>指定字面值的类型。</li>
+<li>对象是具有某种数据类型的内存空间。</li>
+<li>constexpr变量？？？</li>
+</ul>
+</blockquote>
+<p><a href="../rsc/%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9.png">类型选择</a><br>
+<a href="https://www.zhihu.com/question/19918532">不同类型系统的语言</a><br>
+<a href="../rsc/%E7%B1%BB%E5%9E%8B.png">常用语言的类型系统分类</a><br>
+<a href="https://blog.csdn.net/u014659656/article/details/46779381">不同类型系统的可移植问题</a><br>
+<a href="https://blog.csdn.net/zdplife/article/details/50922456">c++类型转换</a><br>
+<a href="https://segmentfault.com/a/1190000016582440">c++类型转换</a></p>
+<h3 id="类型占用内存">类型占用内存</h3>
+<p><a href="https://blog.csdn.net/u014492609/article/details/38067599">int占几个字节？</a><br>
+<a href="https://blog.csdn.net/championhengyi/article/details/80458060">CPU与操作系统约束</a><br>
+<a href="https://www.zhihu.com/question/20370633">vs为什么没有64位版本</a><br>
+<a href="https://www.cnblogs.com/lsgxeva/p/7614856.html">数据模型</a></p>
+<h3 id="变量">变量</h3>
+<p>1.默认初始化<br>
+(1)<strong>内置类型</strong>如果在函数体外,默认初始化为0; 如果<strong>在函数体内,则不被初始化</strong>,（严格来说，编译器并未被要求检查此类错误，大多数编译器会对部分使用未初始化变量的行为给出警告，使用未初始化的变量会带来不可预估的结果）。<br>
+(2)每个类各自决定其初始化的方式。<br>
+(3)连续赋值：赋值号是从右到左的，（赋值返回引用？？），(x=y)=3。</p>
+<p>2.列表初始化</p>
+<p>3.声明和定义
+c++支持分离式编译，允许将一个程序拆分为多个文件分别单独编译，为了支持分离编译，c++将声明和定义区别。声明使得名字为程序所知，一个文件如何想使用别处定义的名字，就必须包含对这个名字的声明。而定义负责创建与名字关联的实体。<code>extern int i;//声明i而非定义i</code>，<code>int j;//声明并定义j</code>，<code>external dooble pi = 3.14;//定义</code>。可以多次声明，只能一次定义。</p>
+<h3 id="复合类型指针和引用">复合类型（指针和引用）</h3>
+<p>类型修饰符（*&amp;）不过是<strong>声明符</strong>的一部分罢了，而非基本类型的一部分。<strong>基本类型+类型修饰符+变量名</strong>
+引用必须初始化，无法重新绑定到新的对象。
+使用未初始化的指针会引起的运行错误，<code>void*</code>能做的比较有限：和别的指针比较，作为函数的输入输出(<strong>制作模板</strong>)，或者赋值给另一个void指针。</p>
+<h3 id="const">const</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">p1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>  <span class="c1">//顶层const, 不能修改p1
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="n">ci</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>  <span class="c1">//顶层const，不能修改ci
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">p2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ci</span><span class="p">;</span>  <span class="c1">//底层const，允许修改p2
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="k">const</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">p2</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">ci</span><span class="p">;</span>  <span class="c1">//用于声明引用的const都是底层const
+</span></code></pre></div><h3 id="类型处理">类型处理</h3>
+<p>1.通过<code>typedef</code>或<code>using =</code>进行别名声明，使得复杂的类型名称简单化。<br>
+2.auto类型声明符能让编辑器替我们分析表达式的类型，但推断出来的类型和初始值类型并不完全相同，auto会忽略顶层的const，留下底层的const；也可能去掉引用。。。<br>
+3.decltype类型指示符，作用是选择并返回操作数的数据类型，编译器分析表达式并得到类型，但<strong>不会执行表达式或函数</strong>。<br>
+如果表达式是<strong>解引用</strong>或者<strong>有双层括号</strong>，则结果是引用类型。</p>
+<h3 id="头文件保护符">头文件保护符</h3>
+<p>利用<code>#ifndef</code>, <code>#define</code>, <code>#endif</code>, <code>#ifdef</code>这几个预处理变量，避免头文件被多次重复包含。头文件即使（目前还）没有被包含到其他文件中，也应该设置保护符，习惯性加上即可，不必在意是否需要。</p>
+<h2 id="第三章字符串vector数组">第三章：字符串，vector，数组</h2>
+<blockquote>
+<ul>
+<li>头文件不应包含using声明，因为头文件的内容会拷贝到所有引用它的文件中，可能产生名字冲突。</li>
+<li>c++内置类型如数组的实现与硬件密切相关，灵活性稍显不足。</li>
+</ul>
+</blockquote>
+<h3 id="string">string</h3>
+<p>1.直接初始化和拷贝初始化:<code>string s = &quot;abc&quot;;</code>为拷贝初始化, 拷贝初始化的三种形式<code>s = str;</code>, <code>s = string(&quot;abc&quot;);</code>, <code>s = &quot;abc&quot;;</code>。
+2.字符串读取：<code>getline(cin, line);</code>
+3.由于string兼容很多c字符串的操作，所以string的成员函数经常支持下表形式的操作，如<code>find()</code>, <code>replace()</code>等，但algorithm库中都是标准接口，使用标准迭代器。</p>
+<h3 id="vector">vector</h3>
+<p>1.vector能容纳绝大多数对象作为元素，但由于引用不是对象，不存在包含引用的vector。同样，数组的元素也是对象，所以不存在引用的数组。<br>
+2.初始化：</p>
+<ul>
+<li><code>vector&lt;int&gt; nums(10);</code>nums有十个元素，每个为零， <code>vector&lt;int&gt; nums{10};</code>nums有一个元素。</li>
+<li>vector<!-- raw HTML omitted --> v(&ldquo;hi&rdquo;); //报错</li>
+<li>vector<!-- raw HTML omitted --> v{&ldquo;hi&rdquo;}; //列表初始化</li>
+<li>vector<!-- raw HTML omitted --> v{10}; //十个元素</li>
+<li>vector<!-- raw HTML omitted --> v{10, &ldquo;hi&rdquo;}; // 十个hi</li>
+</ul>
+<p>3.通过下标访问不存在的元素的行为非常常见，而且会产生非常严重的后果。所谓的<strong>缓冲区溢出</strong>指的就是这类错误。大多数常见的错误都是源于缓存区溢出。
+4.end()为“尾后”迭代器。</p>
+<h3 id="数组">数组</h3>
+<p>1.因为编译时编译器必须知道数组的大小，所以数组的维度必须是<strong>常量表达式</strong>。如果不指定数组的维度，那么数组大小由显示初始化的维度决定。<br>
+2.字符数组末尾有一个空字符<code>\0</code>。<br>
+3.不能直接用一个数组来初始化另一个数组，也不能将一个数组拷贝给另一个数组。（编译器扩展可能会会支持，但不是标准。）<br>
+4.对于复杂数组的声明，如果没有括号，则按照从右到左理解（默认情况下，<strong>类型修饰符从右到左依次绑定</strong>）。如果有括号，则按照<strong>从内到外</strong>理解，如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="o">*</span><span class="n">ptrs</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// ptrs是一个含有十个整数指针的数组
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">&amp;</span><span class="n">refs</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// 错误：不存在引用的数组
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">parray</span><span class="p">)</span> <span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">//parray指向一个含有十个整数的数组
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">RefArray</span><span class="p">)</span> <span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// RefArray引用一个含有十个整数的数组
+</span><span class="c1"></span>  
+  <span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">&amp;</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="nf">b</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="k">decltype</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">d</span><span class="p">)</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="o">*</span><span class="n">d</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">//输出a[1]
+</span><span class="c1"></span>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">//输出a
+</span><span class="c1"></span>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">//输出a
+</span><span class="c1"></span>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">//输出&amp;a[1]
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">*</span><span class="n">a1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">//下标竟然可以是负数
+</span><span class="c1"></span>  <span class="n">a</span> <span class="o">=</span> <span class="n">a1</span><span class="p">;</span> <span class="c1">//报错，不能给数组赋值
+</span><span class="c1"></span>  <span class="n">b</span> <span class="o">=</span> <span class="n">a1</span><span class="p">;</span> <span class="c1">//b为指针
+</span><span class="c1"></span>  <span class="n">c</span> <span class="o">=</span> <span class="n">a1</span><span class="p">;</span> <span class="c1">//报错，不能给数组赋值
+</span></code></pre></div><p>5.c++11标准提供了begin()和end()函数，返回数组的头指针和尾后指针，定义在iterator头文件中。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="n">nums</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">beg</span> <span class="o">=</span> <span class="n">begin</span><span class="p">(</span><span class="n">nums</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="o">*</span><span class="n">last</span> <span class="o">=</span> <span class="n">end</span><span class="p">(</span><span class="n">nums</span><span class="p">);</span>
+</code></pre></div><p>6.内置类型的下标运算符所用的索引值不是无符号类型，这和vector，string不一样。
+7.不要在c++中使用c风格字符串，极易引起程序漏洞，是诸多安全问题的根本原因。</p>
+<h2 id="第四章表达式">第四章：表达式</h2>
+<ul>
+<li>重载运算符，其包括运算变量的类型和返回值的类型，都是有该运算符决定的；但是运算对象的个数、运算符的优先级和结合律都是无法改变的。</li>
+<li>简单归纳：当一个对象被用作右值的时候，用的是对象的纸（内容）；当对象被用作左值的时候，用的是对象的身份（在内存中的位置）。</li>
+<li>求余运算符的对象必须是整数，否则报错。<code>21 % -5； //结果为1</code></li>
+<li>除非必须，否则不使用递增递减运算符的后置版本。一是更符合编程初衷，二是性能。<code>*iter++;</code>等价于<code>*(iter++)</code>。</li>
+<li><code>sizeof</code>运算符返回表达式或者类型所占的字节数。</li>
+</ul>
+<h3 id="求值顺序">求值顺序</h3>
+<p>1.有四种运算符明确规定了运算对象的求值顺序，为<code>&amp;&amp;</code>，<code>||</code>，<code>?:</code>, <code>,</code>四种。<br>
+2.<strong>对于没有指定执行顺序的运算符来说，如果表达式指向并修改同一个对象，将会引发错误并产生未定义的行为。</strong><br>
+3.<code>int i = f1() * f2();</code>，其中<code>f1</code>，<code>f2</code>一定在乘法之前调用，但两个函数的执行顺序是不确定的。<br>
+4.<code>int i = 0; cout &lt;&lt; i &lt;&lt; &quot; &quot; &lt;&lt; ++i &lt;&lt; endl; //未定义</code>，编译器可能先求<code>i</code>再求<code>++i</code>，也可能先求<code>++i</code>再求<code>i</code>，甚至有其他完全不同的操作。因为此表达式的行为不可预知，所以不论编译器生成什么的代码程序都是错误的。其他例子，如<code>*iter = toupper(*iter++); //错误，未定义行为</code>。<br>
+5.<code>*++iter</code>合法，先执行递增再解引用。</p>
+<h3 id="运算符">运算符</h3>
+<p>1.sizeof运算符</p>
+<h3 id="类型转换">类型转换</h3>
+<p>1.大多数用到数组的表达式中，数组自动转换成数组首元素的指针；当数组作为decltype关键字的参数，或者作为<strong>取地址符</strong>，sizeof及typeid等运算符的运算对象时，上述转换不会发生。<br>
+2.虽然有时候不得不使用强制类型转换，但这种方法本质上是非常危险的。</p>
+<ul>
+<li>static_cast<!-- raw HTML omitted -->()任何具有明确定义的类型，只要不包含底层const，都可以使用。类型损失的警告信息会被关闭。</li>
+<li>const_cast只能改变运算对象的底层const。</li>
+<li>reinterpret_cast通常为运算对象的位模式提供较底层的重新解释。使用这种转换是非常危险的，本质上依赖于机器，要想安全使用必须对涉及的类型和编译器实现转换的过程非常了解。</li>
+<li>建议：避免使用强制类型转换。</li>
+</ul>
+<p>3.旧式的强制类型转换，如果转换为const_cast和static_cast也合法，则其行为与对应的命名转换一致。如果替换后不合法，则旧式强制类型转换执行与reinterpret_cast类似的功能。一旦转换过程出现问题，追踪更加困难。<br>
+<code>type(expr); //函数形式</code><br>
+<code>(type)expr; //c语言风格</code></p>
+<h2 id="第五章语句控制流">第五章：语句（控制流）</h2>
+<ul>
+<li>逗号表示空语句，使用空语句应该加上注释，从而使读者注意到有意的忽略。</li>
+<li>在异常发生期间正常执行“清理”工作的程序被称为异常安全的代码。当异常发生时只是简单终止程序，这样也不用担心异常安全的问题，但要保证处理异常并继续执行，就必须注意。</li>
+</ul>
+<h3 id="switch">switch</h3>
+<p>1.从匹配的第一条语句往后执行到最后，因此break语句非常重要。
+2.建议在最后一个case和default标签后面写case，保持风格一致，避免添加新的case漏掉。</p>
+<h2 id="第六章函数">第六章：函数</h2>
+<ul>
+<li>通过<strong>调用运算符</strong>执行函数，调用运算符是一对括号，作用于一个表达式（函数或者指向函数的指针），调用表达式的类型就是函数的返回类型。主调函数，被调函数。</li>
+<li>尽管实参与形参存在对应关系，但是并没有规定实参的求值顺序，编译器能以任意可行的顺序对实参求值。</li>
+<li>局部静态对象：在函数中定义static对象，在第一次经过时定义初始化，直到程序结束才销毁。</li>
+<li>参数赋值是从左到右，所有默认实参必须在右边，让那些经常使用默认值的形参出现在后面。</li>
+<li>内联可以避免函数调用的开销；一般来说，内联机制用于优化规模小、流程直接、频繁调用的函数。</li>
+<li>constexpr函数，规定：函数的返回类型和参数类型都是字面值，函数体内有且只有一条return语句，隐式指定为内联。</li>
+<li>constexpr函数不一定返回常量表达式，把内联和constexpr函数放在头文件中</li>
+</ul>
+<h3 id="参数传递">参数传递</h3>
+<p>1.值传递：指针形参，熟悉c的程序员经常使用指针类型的形参访问函数外部的对象，在c++中，<strong>建议使用引用类型的形参代替指针</strong>。<br>
+2.拷贝大的类类型或者容器对象比较低效，甚至有的类类型（包括io在内）根本不支持拷贝操作。当某种类型不支持拷贝时，只能通过引用形参访问。<br>
+3.如果函数无需修改引用形参的值，最好将其声明为<strong>常量引用</strong>。<br>
+4.使用引用形参返回额外信息（好像我经常这么做，但java不支持）。<br>
+5.用实参初始话形参时会<strong>忽略底层const</strong>，所以也不能利用顶层const实现重载。<br>
+6.形参的初始化方式和变量的初始化形式一样，<strong>可以使用非常量初始化一个底层const对象，但是反过来不行</strong>。底层const出现在指针和引用中。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">cp</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">;</span>  <span class="c1">//correct
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">cp</span><span class="p">;</span>  <span class="c1">//wrong
+</span><span class="c1"></span>  <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>  <span class="c1">//correct
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span> <span class="c1">//wrong
+</span></code></pre></div><p>7.尽量使用常量引用，把函数不会改变的形参定义为普通引用是一种比较常见的错误，一是误导调用者函数可以改变形参的值，二是限制函数所接受的实参类型。
+8.数组形参：数组有两个特殊的性质，一是不能拷贝，所以无法以值传递的方式使用数组形参；二是数组会被转换成指针，所以当我们为函数传递一个数组时，实际上传递的是数组的指针，函数并不知道数组的长度。管理数组形参有三种常用技术：</p>
+<ul>
+<li>使用数组本身带有结束标记来指定长度，如c风格字符串。</li>
+<li>使用标准库规范，传递数组首指针和尾后指针。</li>
+<li>显示传递一个表示数组大小的形参</li>
+<li>另外：可以使用数组引用形参</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">);</span>  <span class="c1">//以下三者等价
+</span><span class="c1"></span>  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="p">[]);</span>
+  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">]);</span> <span class="c1">//这里的维度是我们期望的维度，实际不一定
+</span><span class="c1"></span>
+  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cp</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">begin</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">end</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">ia</span><span class="p">[],</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+  <span class="n">vodi</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">)[</span><span class="mi">10</span><span class="p">]);</span>
+</code></pre></div><h3 id="可变参数">可变参数</h3>
+<p>1.如果所有实参类型相同，c++11提供<code>initializer_list</code>，initializer_list对象的元素永远是常量；<br>
+2.如果实参类型不同，c++11提供可变参数模板；<br>
+3.省略符是一种特殊的形参类型，可以传递可变参数的形参，但一般只用于与c函数交互的借口。</p>
+<h3 id="返回类型">返回类型</h3>
+<p>1.不要返回局部变量的引用和指针；<br>
+2.调用一个返回引用的函数得到的是左值，其他返回类型得到的是右值。<br>
+3.列表初始化返回值。<br>
+4.返回数组指针</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">Type</span> <span class="p">(</span><span class="o">*</span><span class="n">function</span><span class="p">(</span><span class="n">parameter_list</span><span class="p">))</span> <span class="p">[</span><span class="n">dimension</span><span class="p">]</span> <span class="c1">//返回数组指针的函数形式,数组维度是必须的。
+</span><span class="c1"></span>  <span class="k">auto</span> <span class="n">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="p">)[</span><span class="mi">10</span><span class="p">]</span><span class="err">；</span> <span class="c1">//在本应返回的地方写auto,通过尾置返回类型。
+</span><span class="c1"></span>  <span class="c1">//或者使用decltype声明返回类型
+</span></code></pre></div><h3 id="函数重载">函数重载</h3>
+<p>1.一个拥有<strong>顶层const</strong>的形参无法和另一个没有顶层const的形参区别开来，不能重载；如果形参是某种类型的指针或引用，<strong>底层const</strong>可以实现重载。<br>
+2.<strong>什么时候使用重载？？？</strong><br>
+3.const_cast在重载函数的情景最有用。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">shorterString</span><span class="err">（</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">s1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">s2</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">?</span> <span class="nl">s1</span> <span class="p">:</span> <span class="n">s2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">string</span><span class="o">&amp;</span> <span class="n">shorterString</span><span class="p">(</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s1</span><span class="p">,</span> <span class="n">string</span> <span class="err">$</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">shorterString</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">s1</span><span class="p">),</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">s2</span><span class="p">));</span>
+    <span class="c1">// auto会忽略引用
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">const_cast</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+  <span class="p">}</span>
+</code></pre></div><p>4.重载匹配</p>
+<ul>
+<li>编译器找到最佳匹配，并生成调用该函数的代码；</li>
+<li>无匹配，报错；</li>
+<li>多个匹配但不存在最佳匹配，报错；</li>
+</ul>
+<h3 id="函数指针">函数指针</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">bool</span> <span class="nf">lengthCompare</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="c1">//该函数的类型是：bool(const string&amp;, const string&amp;);
+</span><span class="c1"></span>  <span class="kt">bool</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+
+  <span class="n">pf</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">;</span> <span class="c1">//二者等价，类似数组指针
+</span><span class="c1"></span>  <span class="n">pf</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lengthcompare</span><span class="p">;</span>
+
+  <span class="kt">bool</span> <span class="n">b1</span> <span class="o">=</span> <span class="n">lengthCompare</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span> <span class="c1">//以下为等价调用
+</span><span class="c1"></span>  <span class="kt">bool</span> <span class="n">b2</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+  <span class="kt">bool</span> <span class="n">b3</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">pf</span><span class="p">)(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+
+  <span class="c1">//Func和Func2是函数类型
+</span><span class="c1"></span>  <span class="k">typedef</span> <span class="kt">bool</span> <span class="nf">Func</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="k">typedef</span> <span class="nf">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="n">Func2</span><span class="p">;</span>
+  <span class="c1">//FuncP和FuncP2是函数指针类型
+</span><span class="c1"></span>  <span class="k">typedef</span> <span class="nf">bool</span><span class="p">(</span><span class="o">*</span><span class="n">FuncP</span><span class="p">)(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="k">typedef</span> <span class="nf">decltype</span><span class="p">(</span><span class="n">lengthCompare</span><span class="p">)</span> <span class="o">*</span><span class="n">FunctionP2</span><span class="p">;</span>
+</code></pre></div><h2 id="第七章类">第七章：类</h2>
+<blockquote>
+<ul>
+<li>类的基本思想是数据抽象和封装。数据抽象是一种依赖于接口和实现分离的编程技术。类的接口包括用户所能执行的操作；类的实现包括类的数据成员、负责接口实现的函数体以及定义类所需的各种私有函数。封装实现了类的接口和实现的分离。</li>
+<li>抽象，是指从众多的事务中抽取出具有共同的、本质性的特征作为一个整体。是共同特质的集合形式。封装，是将通过抽象所得到的数据信息和操作进行结合，使其形成一个有机的整体。对内执行操作，对外隐藏细节和数据信息。两者的区别，在于抽象是一种思维方式，而封装则是一种基于抽象性的操作方法。我们通过抽象所得到数据信息及其功能，以封装的技术将其重新聚合，形成一个新的聚合体，也就是类。或者说，两者是合作者的关系，如果没有抽象，封装就无从谈起，如果没有封装，抽象也将没有意义。</li>
+<li>编译器分两步处理类：首先编译成员的声明，然后才轮到成员函数体。因此，成员函数体可以随意使用类中的其他成员而无需在意他们的出现次序。</li>
+<li>可以将类的声明和定义分离开来（前向声明，此时类是不完全类型）。在创建类的对象之前，类必须定义，否则无法计算内存。</li>
+</ul>
+</blockquote>
+<h3 id="const成员函数">const成员函数</h3>
+<p>1.默认情况下，this的类型是<strong>指向类类型非常量版本的常量指针</strong>。例如在Sales_data成员函数中，this的类型是Sales_data *const。默认情况下我们不能把this绑定到一个常量对象上，这使得我们不能在一个常量对象上调用普通的成员函数。<br>
+2.c++允许把const关键字放在成员函数的参数列表之后，表示this是一个指向常量的指针，这样的成员函数称为常量成员函数。<br>
+3.常量对象，以及常量对象的引用或者指针都只能调用常量成员函数。</p>
+<h3 id="类的定义">类的定义</h3>
+<p>1.在类的外部定义成员函数时，定义必须和声明匹配。<br>
+2.定义类相关的<strong>非成员函数</strong>，一些<strong>辅助函数</strong>尽管定义的操作从概念上是属于类的接口的组成部分，但实际不属于类。应当将他们的声明和类的声明放在同一个头文件，这样用户只需引入一个头文件就可以使用接口。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="c1">//定义一个返回this对象的函数
+</span><span class="c1"></span>  <span class="n">Sales_data</span><span class="o">&amp;</span> <span class="n">Sales_data</span><span class="o">::</span><span class="n">combine</span><span class="p">(</span><span class="k">const</span> <span class="n">Sales_data</span> <span class="o">&amp;</span><span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">units_sold</span> <span class="o">+=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">units_sold</span><span class="p">;</span>
+    <span class="n">revenue</span> <span class="o">+=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">revenue</span><span class="p">;</span>
+    <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div><h3 id="构造函数">构造函数</h3>
+<p>1.只有当类没有任何构造函数的情况下，编译器才会自动生成默认构造函数，又称为<strong>合成的默认构造函数</strong>。<br>
+2.某些类<strong>不能依赖</strong>合成的默认构造函数，必须定义自己的默认构造函数，有三个原因。</p>
+<ul>
+<li>一旦我们定义了一些其他的构造函数，除非我们再定义一个默认的构造函数，否则将没有默认构造函数。这条规则的依据是，如果一个类在某种情况下需要控制对象初始化，那么该类很可能在所有情况下都需要控制。</li>
+<li>对于某些类来说，合成的默认构造函数可能执行错误的操作。如在块中的内置类型或复合类型被默认初始化时，它们的值未定义。如果类包含内置类型或者复合类型的成员，则<strong>只有当这些成员全都被赋予类内初始值时，这个类才适合使用合成的默认构造函数。</strong></li>
+<li>有时候编译器不能为某些类合成默认的构造函数。</li>
+</ul>
+<p>3.通过在参数列表后面使用<code>=default</code>来要求编译器生成构造函数。<br>
+4.类内初始值，构造函数初始值列表，在类的外部定义构造函数。<strong>初始值列表-&gt;类内初始值-&gt;默认初始化</strong><br>
+5.拷贝、赋值和析构，如果不自主定义，则<strong>编译器会合成默认版本</strong>。一般来说，编译器生成的版本将对每个成员执行拷贝，赋值和销毁操作。<strong>某些类不能依赖于合成的版本</strong>。<br>
+6.构造函数的初始值有时必不可少，例如当成员是const或者引用时，必须通过初始值列表初始化。<br>
+7.<strong>在很多类中</strong>，初始化和赋值关系到底层效率。<br>
+8.成员的初始化顺序与它们<strong>在类定义中的出现顺序一致</strong>，与初始值列表的顺序无关。建议二者顺序一致。<br>
+9.c++11标准添加<strong>委托构造函数</strong>。<br>
+10.如果构造函数只接受<strong>一个实参</strong>，则它实际定义了转换为此类类型的<strong>隐式转换机制</strong>。隐式转换机制只允许<strong>一步类类型转换</strong>，这种隐式转换可以通过添加<code>explicit</code>限制。所以explicit关键字只对单个参数有效。当然explicit无法限制显式转换。</p>
+<h3 id="访问控制">访问控制</h3>
+<p>1.使用class和struct定义类唯一的区别就是默认的访问权限。<br>
+2.如果类想把一个函数作为它的友员，只需在类内添加一条以<code>friend</code>关键字开始的函数声明。<br>
+3.类内声明友员仅仅指定访问权限，还必须在类外再专门对函数进行声明。为了是友员对类的用户可见，通常把友员的声明（类外）和类的声明放在同一个头文件。<br>
+4.可以通过<code>mutable</code>关键字修改类常量的某些可变数据成员。</p>
+<h3 id="友员">友员</h3>
+<p>1.如果类想把一个函数作为它的友员，只需在类内添加一条以<code>friend</code>关键字开始的函数声明。<br>
+2.类之间的友员关系<br>
+3.另成员函数作为友员：此时必须注意类之间的声明的定义顺序。<br>
+4.友员同意遵守：必须先声明在使用。</p>
+<h3 id="静态成员">静态成员</h3>
+<p>1.静态函数只能访问静态成员，非静态函数既能访问非静态成员，也能访问静态成员。<br>
+2.对于类成员来说，static关键字只出现在类内部的<strong>声明语句</strong>。<br>
+3.一般来说，不能在类的内部初始化静态成员，相反必须在类的<strong>外部定义和初始化每个静态成员</strong>，一旦定义就存在程序的整个声明周期。<strong>static constexpr 可以类内初始化</strong>。<br>
+4.要想确保对象只定义一次，最好的方法是将静态数据成员的定义和其他非内联函数的定义放在同一个文件。<br>
+5.关于<strong>static const</strong>??? <strong>constexpr</strong>???</p>
+<h2 id="第八章io库">第八章：IO库</h2>
+<ul>
+<li>c++语言不直接处理输入输出，而是通过定义在标准库中的类型类处理IO。支持从设备读写数据，设备包括文件，console，以及一些内存IO，即从string读写数据。</li>
+<li>iostream, fstream, sstream</li>
+</ul>
+<h3 id="io类">IO类</h3>
+<ul>
+<li>cin, 一个istream对象，从标准输入读取数据。</li>
+<li>cout，一个ostream对象，向标准输出写入数据。</li>
+<li><code>&gt;&gt;</code>运算符，用来从一个istream对象读取数据。</li>
+<li><code>&lt;&lt;</code>运算符，用来向一个ostream对象写入数据。</li>
+</ul>
+<p>1.IO对象无拷贝和赋值。<br>
+2.条件状态，IO操作一个与生俱来的问题是可能发生错误。最简单的做法是将它<strong>作为一个条件使用</strong>。此外，标准库定义了一组函数来查询标志位：如good, bad, fail, eof等， 同时流对象也提供了管理状态位的方法，如rdstate，setstate。<br>
+3.管理输出缓冲区，由于设备的写操作可能很耗时，缓冲机制允许操作系统将多个输出操作合并为单一的设备写操作，可以带来很大的性能提升。缓冲在多个情况下刷新，</p>
+<ul>
+<li>程序正常结束；</li>
+<li>缓冲区满，需要刷新后续数据才能写入；</li>
+<li>使用操纵符，如endl，ends，flush；</li>
+<li>可以使用操纵符unitbuf设置流的内部状态；</li>
+<li>输出流可能关联其他流，当读写被关联的流时，关联到的流缓冲区刷新。如默认下cin和cerr都关联cout，因此读cin或者写cerr会导致cout刷新。</li>
+</ul>
+<p>4.如果想每次输出操作都刷新缓冲，可以使用unitbuf操纵符，它告诉流接下来每次写操作后都执行flush操作。<code>cout &lt;&lt; unitbuf; //设置刷新</code> <code>cout &lt;&lt; nounitbuf; //关闭设置</code><br>
+5.如果程序崩溃，输出缓冲区不会刷新。 
+6.通过<code>tie()</code>实现输入流和输出流绑定。<br>
+7.通过<code>std::ios::in/out/binary</code>，通过ios域下的标志设置读写的<strong>mode</strong>。</p>
+<h3 id="文件输入输出">文件输入输出</h3>
+<p>1.当我们想读写一个文件时，可以定义一个文件对象，并将对象与文件关联起来。每个文件流对象都定义了一个名为<code>open</code>的成员函数，它完成一些系统相关的操作，来定位给定的文件，并<strong>视情况打开为读或写操作</strong>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">ifstream</span> <span class="nf">in</span><span class="p">(</span><span class="n">ifile</span><span class="p">);</span> <span class="c1">//如果提供文件名则open自动调用
+</span><span class="c1"></span>  <span class="n">ofstream</span> <span class="n">out</span><span class="p">;</span>
+  <span class="n">out</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">ifile</span> <span class="o">+</span> <span class="s">&#34;.copy&#34;</span><span class="p">);</span> <span class="c1">//通过open函数关联文件
+</span></code></pre></div><p>2.一个已经打开的文件流调用open会失败，必须先关闭关联的文件再打开新的文件。当一个fstream对象被销毁时，close会自动调用。</p>
+<p>3.每个流都有一个关联的文件模式，用来指出如何使用文件。</p>
+<ul>
+<li>in 以读方式打开</li>
+<li>out 以写方式打开</li>
+<li>app 每次写操作前均定位到文件末尾</li>
+<li>ate 打开文件后立即定位到文件末尾</li>
+<li>trunc 截断文件</li>
+<li>binary 以二级制的方式进行IO</li>
+</ul>
+<p>ifstream默认使用in模式，ofstream<strong>默认使用out模式和截断</strong>。</p>
+<h3 id="string流">string流</h3>
+<p>1.可以通过istringstream对象处理格式化的字符串。</p>
+<h2 id="第九章顺序容器">第九章：顺序容器</h2>
+<ul>
+<li>新的标准库容器的性能几乎肯定与最精心优化过的同类数据结构一样好（通常会更好）。现代c++程序应该使用标准库，而不是原始的数据结构，如内置的数组。</li>
+<li>除非你有很好的理由使用其他容器，否则使用vector。</li>
+<li>如果顺序容器的元素类型支持默认构造，那么可以只提供一个容器大小的参数，如果没有默认构造函数，除了容器大小，须指定一个显式的初始值。</li>
+<li>顺序容器提供赋值运算<code>assign</code>，不适用于关联容器和array。<code>assign(num, value);</code> <code>assign(first, last)</code></li>
+<li>赋值运算导致左边容器内部的迭代器，指针，引用失效，<code>swap</code>操作不会(会交换迭代器)。</li>
+<li>除array外，swap不对任何元素执行拷贝，删除或插入操作，因此可以保证常数时间完成。对于array, swap操作会真换元素。<strong>统一使用非成员版本的swap是一个好习惯</strong>。</li>
+<li>容器的元素是拷贝。</li>
+<li><strong>string类型提供额外接受c风格字符串的操作</strong>。</li>
+</ul>
+<h3 id="操作">操作</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="c1">//返回指向插入元素的迭代器
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">il</span><span class="p">);</span>
+
+  <span class="c1">//在c的末尾构造一个Sales_data对象
+</span><span class="c1"></span>  <span class="c1">//使用三个参数的构造函数
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="s">&#34;978-123444&#34;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">15.9</span><span class="p">);</span>
+  <span class="c1">//错误：没有接受三个参数的push_backa版本
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&#34;978-123444&#34;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">15.9</span><span class="p">);</span>
+  <span class="c1">//正确：创建临时对象在拷贝
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Sales_data</span><span class="p">(</span><span class="s">&#34;978-123444&#34;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mf">15.9</span><span class="p">));</span>
+  <span class="c1">//使用默认构造函数
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">();</span>
+
+  <span class="c1">//返回删除后的一个元素的迭代器,删除操作不检查参数的合法性
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</code></pre></div><h3 id="访问">访问</h3>
+<p>访问成员函数返回的是引用，下标运算符越界时，编译器并不提供检查。使用at，越界时会抛出异常。</p>
+<h3 id="容量">容量</h3>
+<p><code>reserve</code>小于当前容量是不会退回内存空间，具体内存扩展依赖实现。<code>resize</code>只改变元素数目，不是容量，不能用来减少内存空间。<code>shrink_to_fit</code>要求vector,string,deque退回内存，但具体实现可能选择忽略。<code>size</code>为保存元素个数，<code>capacity</code>为不重新分配内存的情况下最多可存几个元素。分配扩展基本原则：确<strong>保用push_back向vector添加元素的操作具有高效率</strong>。</p>
+<h3 id="适配器stack-queue-priority_queue">适配器：stack, queue, priority_queue</h3>
+<p>每个适配器都定义两个构造函数：
+<code>stack&lt;int&gt; stk(deq); //从dep拷贝元素到stk</code><br>
+<code>stack&lt;string, vector&lt;string&gt;&gt; str_stk2(svec); //默认stack和queue用deque实现，可以指定用vector实现，初始化保存svec的元素</code></p>
+<h2 id="第十章泛型算法generic">第十章：泛型算法（generic）</h2>
+<ul>
+<li>标准库容器定义的操作集合惊人的小。标准库并未给每个容器添加大量功能，而是提供一组算法，这些算法大多数独立于任何特定的容器。它们是通用的或者泛型的。</li>
+<li>迭代器令算法不依赖于容器，但算法依赖于元素类型的操作。</li>
+<li>算法永远不会执行容器的操作：算法永远不会改变容器大小。</li>
+</ul>
+<h3 id="基本">基本</h3>
+<p>1.只读算法</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="c1">//由于string定义了+运算符，所以可以调用accumulate拼接字符串
+</span><span class="c1"></span>  <span class="n">string</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="n">string</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">));</span>
+  <span class="c1">//字符串字面值的类型是const char*?
+</span><span class="c1"></span>  <span class="n">string</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">cbegin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">cend</span><span class="p">(),</span> <span class="s">&#34;&#34;</span><span class="p">);</span> <span class="c1">//错误：const char*没有定义+运算符
+</span><span class="c1"></span>
+</code></pre></div><p>对于只读而不改变元素的算法，通常最好使用cbegin()和cend()。
+那些只接受一个单一迭代器表示第二个序列的算法，都假定第二个序列至少和第一个序列一样长。<strong>有些算法接受三个迭代器参数，有的接受四个迭代器参数。确保算法不会访问第二个序列中不存在的元素是程序员的责任。</strong></p>
+<p>2.写容器元素</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+  <span class="c1">//灾难：修改vec中10个不存在的元素
+</span><span class="c1"></span>  <span class="n">fill_n</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="c1">//正确：使用插入迭代器，back_insert等价于push_back
+</span><span class="c1"></span>  <span class="n">fill_n</span><span class="p">(</span><span class="n">back_inserter</span><span class="p">(</span><span class="n">vec</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div><p>一些算法接受一个迭代器之处一个单独的目的位置，向目的位置<strong>写入数据</strong>的算法假定目的位置足够大，能容纳写入的元素。<strong>注意成员函数和泛型算法的区别：不修改容器大小</strong>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="k">auto</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">end</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">a2</span><span class="p">);</span> <span class="c1">//把a1的内容拷贝给a2，确保a2大小至少大于a1
+</span><span class="c1"></span>  <span class="n">replace</span><span class="p">(</span><span class="n">ilst</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">ilst</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span> <span class="c1">//将所有0改为42，可以使用replace_copy
+</span></code></pre></div><p>3.重排元素</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">sort</span><span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="k">auto</span> <span class="n">end_unique</span> <span class="o">=</span> <span class="n">unique</span><span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">());</span> <span class="c1">//算法不执行容器的操作
+</span><span class="c1"></span>  <span class="n">words</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">end_unique</span><span class="p">,</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">());</span> <span class="c1">//调用成员方法实现真正删除
+</span></code></pre></div><h3 id="定制">定制</h3>
+<p>一元谓词（unary predicate）：只接受一个参数和二元谓词（binary predicate):接受两个参数。</p>
+<p>1.lambda(不限谓词)
+<code>[capture list](parameter list) -&gt; return type {function body} //其中捕获列表和函数体是必须的</code></p>
+<p>lambda通过将局部变量包含到捕获列表来指出将会使用这些变量。
+<code>find_if</code>, <code>for_each</code>, <code>sort</code>等。</p>
+<p>2.值捕获和引用捕获</p>
+<p>类似参数传递，变量的捕获可以是值或引用。与参数不同，被捕获的变量的值是在lambda创建时拷贝（<strong>默认拷贝</strong>），而不是调用时拷贝。
+引用捕获与返回引用有着相同的问题和限制，必须确保被引用的对象在lambda执行的时候是存在的。lambda捕获的都是局部变量，函数执行完就不存在了。<strong>引用捕获有时是必要的</strong>，如接受ostream的引用。
+<strong>建议：尽量保持变量捕获简单化，尽量少捕获，避免潜在的捕获导致的问题。</strong></p>
+<p>3.隐式捕获</p>
+<p><strong>指定编译器推断捕获列表，<code>&amp;</code>告诉编译器采用捕获引用方式，<code>=</code>采用值捕获方式。</strong>
+<strong>如果混合使用隐式和显式，一个元素必须指定隐式的方式，且后面的捕获方式必须都和隐式的不同。</strong>
+使用<code>mutable</code>关键字，可以修改捕获变量的值。</p>
+<p>4.如果不指定返回类型，编译器会自己推断，如果推断的类型与需要的返回类型不符，则会编译报错。</p>
+<p>5.<strong>参数绑定</strong></p>
+<p>对于只有在一两个地方使用的简单函数，lambda表达式是最有用的。如果lambda表达式的捕获列表为空，通常可以用函数代替它。对于捕获局部变量的lambda，用函数替换就不那么容易（<strong>谓词数量问题</strong>）。标准库提供<code>bind</code>函数(函数适配器)，进行<strong>参数列表的适应</strong>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="c1">//_n占位符定义在placeholders命名空间中
+</span><span class="c1"></span>  <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="p">;</span>
+  <span class="c1">//bind会将g(_1, _2)映射为f(a,b,_2,c,_1)
+</span><span class="c1"></span>  <span class="k">auto</span> <span class="n">g</span> <span class="o">=</span> <span class="n">bind</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">_1</span><span class="p">);</span>
+  <span class="c1">//参数重排
+</span><span class="c1"></span>  <span class="n">sort</span><span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">isShorter</span><span class="p">);</span>
+  <span class="n">sort</span><span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">bind</span><span class="p">(</span><span class="n">isShorter</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="n">_1</span><span class="p">));</span>
+  <span class="c1">//使用标准库ref函数拷贝引用
+</span><span class="c1"></span>  <span class="n">for_each</span><span class="p">(</span><span class="n">words</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">words</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">bind</span><span class="p">(</span><span class="n">print</span><span class="p">,</span> <span class="n">ref</span><span class="p">(</span><span class="n">os</span><span class="p">),</span> <span class="n">_1</span><span class="p">,</span> <span class="sc">&#39; &#39;</span><span class="p">));</span>
+</code></pre></div><p>默认下，bind的那些不占位的参数使用拷贝的形式，但与lambda类似，有时希望使用引用或者对象无法拷贝，此时必须使用<code>ref</code>标准库函数（functional中）。</p>
+<h3 id="其他迭代器">其他迭代器</h3>
+<ul>
+<li>插入迭代器：这些迭代器被绑定到容器上，用来向容器插入元素；</li>
+<li>流迭代器：绑定到输入或者输出流上，用来遍历所关联的IO流；</li>
+<li>反向迭代器：向后移动，除forward_list之外的标准库容器均有反向迭代器；</li>
+<li>移动迭代器：这些专用的迭代器不是拷贝其中的元素，而是移动他们。</li>
+</ul>
+<p>1.插入迭代器
+back_inserter(c)：创建使用push_back的迭代器；
+front_inserter(c)：创建使用push_front的迭代器；
+inserter(c, iter)：创建使用insert的迭代器；</p>
+<p><code>copy(lst.cbegin(), lst.cend(), front_inserter(lst2);</code>
+<code>copy(lst.cbegin(), lst.cend(), inserter(lst2, lst2.begin()));</code></p>
+<p>2.反向迭代器</p>
+<p><code>sort(vec.begin(), vec.end());</code> <code>sort(vec.rbegin(), vec.rend());</code>迭代器必须支持递减操作才能定义反向迭代器，所以forward_list和流迭代器没有反向。</p>
+<p>迭代器与反向迭代器之间转换：转换后指向的不是同一个位置，二是相邻的位置。
+<code>list&lt;int&gt;::iterator iter(riter.base());</code>
+<code>list&lt;int&gt;::reverse_iterator riter(iter);</code></p>
+<h3 id="泛型算法结构">泛型算法结构</h3>
+<ul>
+<li>输入迭代器：只读，不写；单遍遍历，只能递增；</li>
+<li>输出迭代器：只写，不读；单遍遍历，只能递增；</li>
+<li>前向迭代器：可读写，多遍遍历，只能递增；</li>
+<li>双向迭代器：可读写，多遍遍历，可递增递减；</li>
+<li>随机访问迭代器：可读写，多遍遍历，支持迭代器所有操作。</li>
+</ul>
+<p>**任何算法的最基本的特性是它要求其迭代器提供哪些操作。**c++标准指明了泛型和数值算法的每个迭代器参数的最小类别。例如，<code>find</code>算法在序列上一遍扫描，对元素只读，因此至少需要输入迭代器；<code>replace</code>函数需要一对迭代器，至少是前向迭代器。<code>sort</code>算法要求随机访问迭代器。<strong>对向一个算法传递错误类别的迭代器的问题，很多编译器不会给出任何警告信息</strong>。</p>
+<p>算法的形参模式大体分为四种：<br>
+<code>alg(beg, end, other args);</code><br>
+<code>alg(beg, end, dest, other);</code><br>
+<code>alg(beg, end, beg2, other);</code><br>
+<code>alg(beg, end, beg2, end2, otqiher);</code></p>
+<p>命名规范：</p>
+<ul>
+<li>一些算法使用重载的形式传递一个谓词，<code>unique(beg, end);</code> <code>unique(beg, end, cmp);</code></li>
+<li>_if版本, <code>find(beg, end, val);</code> <code>find(beg, end, pred);</code></li>
+<li>_copy版本, <code>reverse(beg, end);</code> <code>reverse(beg, end, dest);</code></li>
+</ul>
+<h3 id="特定容器算法">特定容器算法</h3>
+<p>由于list和forward_list的链式结构，使用通用算法的代价很高，应该<strong>优先使用成员函数版本的算法</strong>。</p>
+<h2 id="第11章关联容器">第11章：关联容器</h2>
+<p>关联容器对其关键字有一些限制。对于有序容器，<strong>关键字类型必须定义元素比较的方法</strong>。默认情况下，标准库使用关键字类型的<code>&lt;</code>运算符来比较两个关键字。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">bool</span> <span class="nf">compareIsbn</span><span class="p">(</span><span class="k">const</span> <span class="n">Sales_data</span> <span class="o">&amp;</span><span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">Sales_data</span> <span class="o">&amp;</span><span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">lhs</span><span class="p">.</span><span class="n">isbn</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">rhs</span><span class="p">.</span><span class="n">isbn</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="n">multiset</span><span class="o">&lt;</span><span class="n">Sales_data</span><span class="p">,</span> <span class="k">decltype</span><span class="p">(</span><span class="n">compareIsbn</span><span class="p">)</span><span class="o">*&gt;</span> <span class="n">bookstore</span><span class="p">(</span><span class="n">compareIsbn</span><span class="p">);</span>
+</code></pre></div><p>标准库类型pair，定义在头文件utility中。<code>pair&lt;T1, T2&gt; p; p = {v1, v2}; p = make_pair(v1, v2); p.first; p.second;</code></p>
+<h3 id="关联容器操作">关联容器操作</h3>
+<p>1.类型：key_type, mapped_type, value_type
+2.可以通过迭代器遍历map或set（有序的按字典序），但<strong>不能通过迭代器修改关键字的值</strong>，迭代器是const的。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">il</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span> <span class="c1">//从迭代器p开始搜索新元素的存储位置
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+
+  <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+  <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+
+  <span class="n">c</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="c1">//返回关键字为k的元素，不存在就添加并初始化
+</span><span class="c1"></span>  <span class="n">c</span><span class="p">.</span><span class="n">at</span><span class="p">[</span><span class="n">k</span><span class="p">];</span> <span class="c1">//返回关键字为k的元素，不存在则抛出异常
+</span></code></pre></div><p>3.对于mutimap和mutiset，如果<code>lower_bound</code>和<code>upper_bound</code>返回相同的迭代器，则关键字不存在。直接调用<code>equal_range</code>，返回迭代器pair。如果未找到，则pair两个迭代器都指向关键字的插入位置。</p>
+<p>4.使用无需容器通常更简单，通常也会有更好的性能。</p>
+<h3 id="无序关联容器">无序关联容器</h3>
+<p>有序关联容器底层是RBTree，无序关联容器底层是hashmap。无序容器对关键字的要求：默认情况下，无序容器使用关键字类型的<code>==</code>运算符比较元素，并使用一个<code>hash&lt;key_type&gt;</code>类型的对象生成哈希值。所以为了使用无序容器的自定义类型版本，必须提供==运算符和哈希计算函数。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">size_t</span> <span class="nf">hasher</span><span class="p">(){};</span>
+  <span class="kt">bool</span> <span class="nf">eqOp</span><span class="p">()</span> <span class="p">{};</span>
+  <span class="k">using</span> <span class="n">SD_multiset</span> <span class="o">=</span> <span class="n">unordered_multiset</span><span class="o">&lt;</span><span class="n">Sales_data</span><span class="p">,</span> <span class="k">decltype</span><span class="p">(</span><span class="n">hasher</span><span class="p">)</span><span class="o">*</span><span class="p">,</span> <span class="k">decltype</span><span class="p">(</span><span class="n">eqOp</span><span class="p">)</span><span class="o">*&gt;</span><span class="p">;</span>
+  <span class="n">SD_multiset</span> <span class="nf">bookstore</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">hasher</span><span class="p">,</span> <span class="n">eqOp</span><span class="p">);</span>
+</code></pre></div><h2 id="第12章动态内存">第12章：动态内存</h2>
+<h3 id="智能指针">智能指针</h3>
+<p>1.新的标准库提供两种智能指针类型来管理动态对象：<code>shared_ptr</code>允许多个指针指向同一个对象；<code>unique_ptr</code>则独占指向的对象；<code>weak_ptr</code>的伴随类，它是一种弱引用，指向shared_ptr所管理的对象。三种类型都定义在<code>memory</code>中。</p>
+<p>2.默认初始化的智能指针中保存着一个空指针，最安全的分配和使用动态内存的方法是调用一个名为<code>make_shared</code>的标准库函数。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="sc">&#39;a&#39;</span><span class="p">);</span>
+  <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">p2</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+  <span class="n">p1</span><span class="p">.</span><span class="n">use_count</span><span class="p">();</span> <span class="c1">//返回计数，可能很慢，主要用于计数
+</span><span class="c1"></span>  <span class="n">p1</span><span class="p">.</span><span class="n">get</span><span class="p">();</span> <span class="c1">//返回p1中保存的指针，小心使用
+</span></code></pre></div><p>3.使用<strong>计数器</strong>还是其他数据结构记录引用数量，完全由标准库的具体实现决定。当引用计数为0，则销毁对象并释放内存。
+4.如果<strong>将shared_ptr存放在容器中</strong>，而后不再需要部分元素，要记得erase删除不再需要的元素。</p>
+<h3 id="直接管理内存">直接管理内存</h3>
+<p>1.使用内置指针管理动态对象，生命期直到被释放时为止。返回指向动态内存的指针的函数给调用者增加负担，调用者必须记得释放内存。</p>
+<p>三个常见问题：</p>
+<ul>
+<li>忘记delete内存</li>
+<li>使用已经释放掉的对象</li>
+<li>同一块内存释放两次</li>
+</ul>
+<p>2.delete后指针变成<strong>空悬指针</strong>（dangling pointer），即指向一块曾经保存数据对象但现在已经失效的内存的指针。如果需要保留指针，可以在delete后将指针赋值为nullptr。在实际系统中，查找指向相同内存的所有指针异常困难。</p>
+<p>3.不要混用普通指针和智能指针</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="kt">int</span> <span class="o">*</span><span class="nf">x</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+  <span class="n">process</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>  <span class="c1">//错误：不能将int*转换为shared_ptr&lt;int&gt;
+</span><span class="c1"></span>  <span class="n">process</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">));</span> <span class="c1">//合法，但内存会被释放
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="o">*</span><span class="n">x</span><span class="p">;</span> <span class="c1">// 未定义的：x是一个空悬指针
+</span><span class="c1"></span>
+  <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">1024</span><span class="p">);</span> <span class="c1">//错误：不能将一个指针赋值给shared_ptr
+</span><span class="c1"></span>  <span class="n">p</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">1024</span><span class="p">));</span> <span class="c1">//正确：p指向一个新对象
+</span></code></pre></div><p>4.get用来将指针的权限传递给代码，只有确定代码不会delete指针的情况下才可以使用。
+5.相对于使用普通指针，使用智能指针能更好应对代码异常错误时资源正确释放。</p>
+<h3 id="智能指针陷阱">智能指针陷阱</h3>
+<ul>
+<li>不使用相同的内置指针初始化（或reset）多个智能指针；</li>
+<li>不delete get()返回的指针；</li>
+<li>不使用get()初始化或reset另一个智能指针；</li>
+<li>如果使用get()返回的指针，记得最后一个智能指针销毁后，指针无效；</li>
+<li>如果使用智能指针管理的不是new分配的内存，记得传递给它一个删除器。</li>
+</ul>
+<h3 id="unique_ptr">unique_ptr</h3>
+<p>1.定义一个unique_ptr时，需要将其绑定到一个new返回的指针，必须采用直接初始化的形式；不支持普通的拷贝或赋值操作，但可以通过release或reset将指针的所有权从一个（非const）unique_ptr转移到另一个unique_ptr。编译器的早版本包含auto_ptr，目前仍包含兼容，但应该使用uniqu_ptr。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p1</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">42</span><span class="p">));</span>
+  <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p2</span><span class="p">(</span><span class="n">p1</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+  <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p3</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="mi">43</span><span class="p">));</span>
+  <span class="n">p3</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">p2</span><span class="p">.</span><span class="n">release</span><span class="p">());</span>
+
+  <span class="n">p2</span><span class="p">.</span><span class="n">release</span><span class="p">();</span> <span class="c1">//错误：p2不会释放内存，而且我们丢失了指针
+</span><span class="c1"></span>  <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p2</span><span class="p">.</span><span class="n">release</span><span class="p">();</span> <span class="c1">//正确，但必须记得delete(p)
+</span></code></pre></div><p>2.可以拷贝和赋值一个将要被销毁的unique_ptr，最常见的例子是从函数返回一个unique_ptr。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">clone</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="kt">int</span><span class="p">(</span><span class="n">p</span><span class="p">));</span>
+  <span class="p">}</span>
+</code></pre></div><p>3.unique_ptr默认情况下用delete释放对象，我们可以重载默认的删除器。
+<code>unique_ptr&lt;objT, delT&gt; p(new objT, fcn);</code></p>
+<h3 id="weak_ptrhttpsblogcsdnnetvonsditearticledetails81556647"><a href="https://blog.csdn.net/VonSdite/article/details/81556647">weak_ptr</a></h3>
+<p>1.主要作用是打破shared_ptr的循环引用。<br>
+2.不会增加shared_ptr的计数，不支持<code>*</code>和<code>-&gt;</code>，但可以通过<code>lock()</code>接口返回shared_ptr，所有weak_ptr会随着最后一个shared_ptr的销毁一同被销毁。</p>
+<h2 id="动态数组">动态数组</h2>
+<h3 id="new和数组">new和数组</h3>
+<p>1.<code>int *pa = new int[10];</code> new分配要求数量的对象并返回指向第一个对象的指针。“动态数组”有些误导，当用new分配一个数组时，<strong>实际上得到的是一个元素类型的指针，而不是一个数组类型</strong>，所以不支持begin，end，下标等操作。<br>
+2.<strong>动态分配一个空数组是合法的</strong>。<br>
+3.释放动态数组，<code>delete [] pa;</code>必须在指针前加<code>[]</code>，否则未定义。</p>
+<h3 id="allocator类">allocator类</h3>
+<p>1.<code>new</code>分配内存创建对象，<code>delete</code>析构对象释放内存，allocator类将内存分配和对象构造分离(会增加一定开销)。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">allocator</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">a</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">allocate</span><span class="p">(</span><span class="n">n</span><span class="p">);</span> <span class="c1">//p为首元素指针
+</span><span class="c1"></span>  <span class="n">a</span><span class="p">.</span><span class="n">deallocate</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">construct</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">destroy</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</code></pre></div><p>2.拷贝和填充未初始化内存的算法</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++">  <span class="n">uninitialized_copy</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">b2</span><span class="p">);</span> <span class="c1">//将迭代器b到e的对象拷到b2指定的内存
+</span><span class="c1"></span>  <span class="n">uninitialized_copy_n</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">b2</span><span class="p">);</span>
+  <span class="n">uninitialized_fill</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">e</span><span class="p">,</span><span class="n">t</span><span class="p">);</span> <span class="c1">//在b到e指定的内存范围构造对象值为t
+</span><span class="c1"></span>  <span class="n">uninitialized_fill_n</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">t</span><span class="p">);</span>
+</code></pre></div><h2 id="第15章面向对象程序设计">第15章：面向对象程序设计</h2>
+<p>抽象，封装，继承，多态</p>
+<p>在c++中，当我们使用基类的引用或指针调用一个虚函数时将发生<strong>动态绑定</strong>，有时称<strong>运行时绑定</strong>。</p>
+<p>什么是动态绑定？
+在继承关系中，由于。。。</p>
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://a-code-lover.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://a-code-lover.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+      <li><a href="https://a-code-lover.github.io/tags/%E8%AF%BB%E4%B9%A6" role="button">读书 </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://a-code-lover.github.io/blog/2019-04/c-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AAstring%E7%B1%BB/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>C&#43;&#43;实现一个string类</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+                <a href=https://a-code-lover.github.io/blog/2019-05/c-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>C&#43;&#43;常见问题</span>
+                  </div>
+                </a>
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e4%ba%8c%e7%ab%a0%e5%8f%98%e9%87%8f%e4%b8%8e%e7%b1%bb%e5%9e%8b">
+												 第二章：变量与类型
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e7%b3%bb%e7%bb%9f">
+												 类型系统
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e5%8d%a0%e7%94%a8%e5%86%85%e5%ad%98">
+												 类型占用内存
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8f%98%e9%87%8f">
+												 变量
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a4%8d%e5%90%88%e7%b1%bb%e5%9e%8b%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%95%e7%94%a8">
+												 复合类型（指针和引用）
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#const">
+												 const
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e5%a4%84%e7%90%86">
+												 类型处理
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a4%b4%e6%96%87%e4%bb%b6%e4%bf%9d%e6%8a%a4%e7%ac%a6">
+												 头文件保护符
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e4%b8%89%e7%ab%a0%e5%ad%97%e7%ac%a6%e4%b8%b2vector%e6%95%b0%e7%bb%84">
+												 第三章：字符串，vector，数组
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#string">
+												 string
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#vector">
+												 vector
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%95%b0%e7%bb%84">
+												 数组
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e5%9b%9b%e7%ab%a0%e8%a1%a8%e8%be%be%e5%bc%8f">
+												 第四章：表达式
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%b1%82%e5%80%bc%e9%a1%ba%e5%ba%8f">
+												 求值顺序
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%bf%90%e7%ae%97%e7%ac%a6">
+												 运算符
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2">
+												 类型转换
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e4%ba%94%e7%ab%a0%e8%af%ad%e5%8f%a5%e6%8e%a7%e5%88%b6%e6%b5%81">
+												 第五章：语句（控制流）
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#switch">
+												 switch
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e5%85%ad%e7%ab%a0%e5%87%bd%e6%95%b0">
+												 第六章：函数
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8f%82%e6%95%b0%e4%bc%a0%e9%80%92">
+												 参数传递
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0">
+												 可变参数
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%bf%94%e5%9b%9e%e7%b1%bb%e5%9e%8b">
+												 返回类型
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%87%bd%e6%95%b0%e9%87%8d%e8%bd%bd">
+												 函数重载
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88">
+												 函数指针
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e4%b8%83%e7%ab%a0%e7%b1%bb">
+												 第七章：类
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#const%e6%88%90%e5%91%98%e5%87%bd%e6%95%b0">
+												 const成员函数
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e7%9a%84%e5%ae%9a%e4%b9%89">
+												 类的定义
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0">
+												 构造函数
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%ae%bf%e9%97%ae%e6%8e%a7%e5%88%b6">
+												 访问控制
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8f%8b%e5%91%98">
+												 友员
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%9d%99%e6%80%81%e6%88%90%e5%91%98">
+												 静态成员
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e5%85%ab%e7%ab%a0io%e5%ba%93">
+												 第八章：IO库
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#io%e7%b1%bb">
+												 IO类
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%96%87%e4%bb%b6%e8%be%93%e5%85%a5%e8%be%93%e5%87%ba">
+												 文件输入输出
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#string%e6%b5%81">
+												 string流
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e4%b9%9d%e7%ab%a0%e9%a1%ba%e5%ba%8f%e5%ae%b9%e5%99%a8">
+												 第九章：顺序容器
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%93%8d%e4%bd%9c">
+												 操作
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%ae%bf%e9%97%ae">
+												 访问
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%ae%b9%e9%87%8f">
+												 容量
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%80%82%e9%85%8d%e5%99%a8stack-queue-priority_queue">
+												 适配器：stack, queue, priority_queue
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac%e5%8d%81%e7%ab%a0%e6%b3%9b%e5%9e%8b%e7%ae%97%e6%b3%95generic">
+												 第十章：泛型算法（generic）
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%9f%ba%e6%9c%ac">
+												 基本
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%ae%9a%e5%88%b6">
+												 定制
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%85%b6%e4%bb%96%e8%bf%ad%e4%bb%a3%e5%99%a8">
+												 其他迭代器
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%b3%9b%e5%9e%8b%e7%ae%97%e6%b3%95%e7%bb%93%e6%9e%84">
+												 泛型算法结构
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%89%b9%e5%ae%9a%e5%ae%b9%e5%99%a8%e7%ae%97%e6%b3%95">
+												 特定容器算法
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac11%e7%ab%a0%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8">
+												 第11章：关联容器
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%93%8d%e4%bd%9c">
+												 关联容器操作
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%97%a0%e5%ba%8f%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8">
+												 无序关联容器
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac12%e7%ab%a0%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98">
+												 第12章：动态内存
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88">
+												 智能指针
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%9b%b4%e6%8e%a5%e7%ae%a1%e7%90%86%e5%86%85%e5%ad%98">
+												 直接管理内存
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e9%99%b7%e9%98%b1">
+												 智能指针陷阱
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#unique_ptr">
+												 unique_ptr
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#weak_ptrhttpsblogcsdnnetvonsditearticledetails81556647">
+												 weak_ptr
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8a%a8%e6%80%81%e6%95%b0%e7%bb%84">
+												 动态数组
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#new%e5%92%8c%e6%95%b0%e7%bb%84">
+												 new和数组
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#allocator%e7%b1%bb">
+												 allocator类
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%ac%ac15%e7%ab%a0%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e7%a8%8b%e5%ba%8f%e8%ae%be%e8%ae%a1">
+												 第15章：面向对象程序设计
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://a-code-lover.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://a-code-lover.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://a-code-lover.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://a-code-lover.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>
