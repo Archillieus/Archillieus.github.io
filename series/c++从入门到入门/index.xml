@@ -1,9 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++从入门到入门 on Archillieus</title><link>https://a-code-lover.github.io/series/c++%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8/</link><description>Recent content in C++从入门到入门 on Archillieus</description><generator>Hugo -- gohugo.io</generator><language>zn-Hans</language><lastBuildDate>Mon, 10 May 2021 20:14:59 +0800</lastBuildDate><atom:link href="https://a-code-lover.github.io/series/c++%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>开心</title><link>https://a-code-lover.github.io/blog/2021-05/%E5%BC%80%E5%BF%83/</link><pubDate>Mon, 10 May 2021 20:14:59 +0800</pubDate><guid>https://a-code-lover.github.io/blog/2021-05/%E5%BC%80%E5%BF%83/</guid><description>&lt;h2 id="拷贝控制">拷贝控制&lt;/h2>
-&lt;ul>
-&lt;li>析构函数&lt;/li>
-&lt;li>拷贝构造函数&lt;/li>
-&lt;li>拷贝赋值函数&lt;/li>
-&lt;li>移动构造函数&lt;/li>
-&lt;li>移动赋值函数&lt;/li>
-&lt;/ul>
-&lt;p>在定义c++类时，拷贝控制部分是必须，如果用户没有给出自定义的实现，那么编辑器会生成默认的版本，问题是这些默认的行为很可能不是我们想要的。&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43;从入门到入门 on Archillieus</title>
+    <link>https://archillieus.github.io/series/c&#43;&#43;%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8/</link>
+    <description>Recent content in C&#43;&#43;从入门到入门 on Archillieus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Mon, 10 May 2021 20:14:59 +0800</lastBuildDate><atom:link href="https://archillieus.github.io/series/c++%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开心</title>
+      <link>https://archillieus.github.io/blog/2021-05/%E5%BC%80%E5%BF%83/</link>
+      <pubDate>Mon, 10 May 2021 20:14:59 +0800</pubDate>
+      
+      <guid>https://archillieus.github.io/blog/2021-05/%E5%BC%80%E5%BF%83/</guid>
+      <description>&lt;h2 id=&#34;拷贝控制&#34;&gt;拷贝控制&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;析构函数&lt;/li&gt;
+&lt;li&gt;拷贝构造函数&lt;/li&gt;
+&lt;li&gt;拷贝赋值函数&lt;/li&gt;
+&lt;li&gt;移动构造函数&lt;/li&gt;
+&lt;li&gt;移动赋值函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在定义c++类时，拷贝控制部分是必须，如果用户没有给出自定义的实现，那么编辑器会生成默认的版本，问题是这些默认的行为很可能不是我们想要的。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
