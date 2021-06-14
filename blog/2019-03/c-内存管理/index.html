@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="c&#43;&#43;内存管理 参考： 深入理解Linux内存管理 内存模型 段页式 buddy,slab 内存池 堆栈 堆栈的区别 管理方式不同；栈申请和释放由编译器管理，而堆的管理由程序员控制，所有容易产生内存泄露 空间大小不同；栈一般很小，可以设置1M左右，堆内存基本没有限制。 能否产生碎片不同；栈不会产生内存碎片，而堆内存由于频繁的new/delete会产生内存碎片。 生长方向不同；栈从上往下高地址向低地址生产，堆由低地址向高地址生长 分配方式不同">
+  
+  <meta property="og:title" content="C&#43;&#43;内存管理" />
+<meta property="og:description" content="c&#43;&#43;内存管理 参考： 深入理解Linux内存管理 内存模型 段页式 buddy,slab 内存池 堆栈 堆栈的区别 管理方式不同；栈申请和释放由编译器管理，而堆的管理由程序员控制，所有容易产生内存泄露 空间大小不同；栈一般很小，可以设置1M左右，堆内存基本没有限制。 能否产生碎片不同；栈不会产生内存碎片，而堆内存由于频繁的new/delete会产生内存碎片。 生长方向不同；栈从上往下高地址向低地址生产，堆由低地址向高地址生长 分配方式不同" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://archillieus.github.io/blog/2019-03/c-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-03-24T20:14:59&#43;08:00" />
+<meta property="article:modified_time" content="2019-03-24T20:14:59&#43;08:00" />
+
+
+
+
+  <title>
+  
+       C&#43;&#43;内存管理 | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://archillieus.github.io/blog/2019-03/c-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+  
+  
+
+  
+  <link href="https://archillieus.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://archillieus.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://archillieus.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://archillieus.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://archillieus.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://archillieus.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://archillieus.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://archillieus.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://archillieus.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://archillieus.github.io/">
+          
+        <img class="avatar" src="https://archillieus.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://archillieus.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://archillieus.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://archillieus.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://archillieus.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://archillieus.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+      
+        <li><a href="https://archillieus.github.io/series/c&#43;&#43;%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>C&#43;&#43;从入门到入门</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">C&#43;&#43;内存管理</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Mar 24, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>5 minutes read</li>
+    
+  </ul>
+  
+    <div class="view">
+      <img src="https://archillieus.github.io/images/blog/2019-05/%E5%8F%A4%E9%95%87.jpg" />
+    </div>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <h1 id="c内存管理">c++内存管理</h1>
+<p>参考：
+<a href="https://blog.csdn.net/gatieme/article/details/52384965">深入理解Linux内存管理</a></p>
+<h2 id="内存模型">内存模型</h2>
+<ol>
+<li>段页式</li>
+<li>buddy,slab</li>
+<li>内存池</li>
+</ol>
+<h2 id="堆栈">堆栈</h2>
+<h3 id="堆栈的区别">堆栈的区别</h3>
+<ol>
+<li>管理方式不同；栈申请和释放由编译器管理，而堆的管理由程序员控制，所有容易产生内存泄露</li>
+<li>空间大小不同；栈一般很小，可以设置1M左右，堆内存基本没有限制。</li>
+<li>能否产生碎片不同；栈不会产生内存碎片，而堆内存由于频繁的new/delete会产生内存碎片。</li>
+<li>生长方向不同；栈从上往下高地址向低地址生产，堆由低地址向高地址生长</li>
+<li>分配方式不同；栈由编译器分配，堆由程序员动态分配</li>
+<li>分配效率不同；堆比栈的分配效率低得多</li>
+</ol>
+<h3 id="堆栈的大小">堆栈的大小</h3>
+<p>栈的空间一般比较小（约1Mb），堆空间比较大（可以达到几个Gb）。
+计算机会在底层对栈提供支持：分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高。Stack的最顶端一般会留存在CPU registers 和 cache 中。遇到频繁但是层次不多的函数调用，可以利用高速 cache。大块的内存会破坏这种优化。</p>
+<h3 id="堆的内存分配策略">堆的内存分配策略</h3>
+<p>内存池：例如SGI STL中的二级内存分配策略</p>
+<p>参考：<a href="https://blog.csdn.net/xiaorenwuzyh/article/details/44516467">https://blog.csdn.net/xiaorenwuzyh/article/details/44516467</a></p>
+<h3 id="堆栈存的内容">堆栈存的内容</h3>
+<p>堆：new
+栈：函数进栈时第一个进栈的是<strong>主函数的下一条指令地址</strong>，然后时函数的各个参数（大部分编译器从右到左入栈），然后是函数中的局部变量。</p>
+<h2 id="buddyslab">buddy,slab</h2>
+<h3 id="slab着色">slab着色</h3>
+<pre><code>假设cpu的缓存一行为32字节,cpu包含 512 个缓存行（缓存大小16K ）。假设对象 A,B均为32字节，且 A 的地址从 0 开始， B 的地址从 16K 开始，则根据组相联或直接相联映射方式（全相联方式很少使用）， A,B 对象很可能映射到缓存的第0行，此时，如果CPU 交替的访问 A,B 各 50 次，每一次访问 缓存的第 0 行都失效，从而需要从内存传送数据。而 slab 着色就是为解决该问题产生的，不同的颜色代表了不同的起始对象偏移量，对于 B 对象，如果将其位置偏移向右偏移 32字节 ，则其可能会被映射到 cache 的第 1 行上，这样交替的访问 A,B 各 50 次，只需要 2 次内存访问即可。   这里的偏移量就代表了 slab 着色中的一种颜色，不同的颜色代表了不同的偏移量，尽量使得不同的对象的对应到不同的硬件高速缓存行上，以最大限度的提高效率。实际的情况比上面的例子要复杂得多， slab 的着色还要考虑内存对齐等因素，以及 slab内未用字节的大小，只有当未用字节数足够大时，着色才起作用。
+</code></pre>
+<p>参考：
+<a href="https://zhuanlan.zhihu.com/p/36140017">Linux内存管理Buddy和Slab</a></p>
+<h2 id="内存操作错误及对策">内存操作错误及对策</h2>
+<ol>
+<li>
+<p>内存分配未成功，却使用了它。编程新手常犯这种错误，因为他们没有意识到内存分配会不成功。常用解决办法是，在使用内存之前检查指针是否为NULL，应该用if(p==NULL) 或if(p!=NULL)进行防错处理。</p>
+</li>
+<li>
+<p>内存分配虽然成功，但是尚未初始化就引用它。犯这种错误主要有两个起因：一是没有初始化的观念；二是误以为内存的缺省初值全为零，导致引用初值错误（例如数组）。内存的缺省初值究竟是什么并没有统一的标准，尽管有些时候为零值。</p>
+</li>
+<li>
+<p>内存分配成功并且已经初始化，但操作越过了内存的边界。例如在使用数组时经常发生下标“多1”或者“少1”的操作。特别是在for循环语句中，循环次数很容易搞错，导致数组操作越界。</p>
+</li>
+<li>
+<p>忘记了释放内存，造成内存泄露。含有这种错误的函数每被调用一次就丢失一块内存。刚开始时系统的内存充足，你看不到错误。终有一次程序突然死掉，系统出现提示：内存耗尽。动态内存的申请与释放必须配对，程序中malloc与free的使用次数一定要相同，否则肯定有错误（new/delete同理）。</p>
+</li>
+<li>
+<p>释放了内存却继续使用它。</p>
+</li>
+</ol>
+<p>摘自：<a href="https://www.itcodemonkey.com/article/11588.html">https://www.itcodemonkey.com/article/11588.html</a></p>
+<h2 id="内存碎片">内存碎片</h2>
+<h3 id="linux伙伴系统及内存碎片处理">linux伙伴系统及内存碎片处理</h3>
+<p>把所有的空闲页框分组为11个块链表，每个链表分别包含大小为1,2,4,8,16,32,64,128,256,512,1024个连续的页框，对1024个页框的最大请求对应着4MB大小的连续RAM（每页大小为4KB）。</p>
+<p>依据可移动性组织页：</p>
+<blockquote>
+<p>文件系统也有碎片，该领域的碎片问题主要通过碎片合并工具解决。它们分析文件系统，重新排序已分配存储块，从而建立较大的连续存储区。理论上，该方法对物理内存也是可能的，但由于许多物理内存页不能移动到任意位置，阻碍了该方法的实施。因此，内核的方法是反碎片(anti-fragmentation), 即试图从最初开始尽可能防止碎片。</p>
+<p>为每页添加移动属性：不可移动页（内核内存），可移动页（用户空间），可回收页（缓存）。采取策略例如：不可移动的页不能位于可移动内存区的中间等。</p>
+</blockquote>
+<p>从buddy申请内存页，如果找不到合适的页，则会进行两步调整内存的工作（满足一定条件才执行），compact和reclaim。前者是为了整合碎片，以得到更大的连续内存；后者是回收不一定必须占用内存的缓冲内存。
+buddy,slab
+参考：
+<a href="https://cloud.tencent.com/developer/article/1084794">经典面试题之内存碎片</a>
+<a href="https://blog.csdn.net/aurorayqz/article/details/79671785">linux是如何避免内存碎片的</a>
+<a href="https://blog.csdn.net/gatieme/article/details/52694362#t13">伙伴系统是如何避免碎片的</a>
+<a href="https://blog.csdn.net/gatieme/article/details/52384965">深入理解Linux内存管理</a></p>
+<p>2.高速缓存slab
+3.内存池，sgi stl二级分配策略</p>
+<h2 id="内存泄露">内存泄露</h2>
+<h3 id="如何避免">如何避免</h3>
+<ul>
+<li>尽量避免在堆上分配内存。</li>
+<li>申请的内存手动释放，成对使用（可能忘记，异常等）。</li>
+<li>善用RAII机制管理资源（堆上分配内存时，同时在栈上分配一个对象，让栈上的对象对堆上的对象进行封装，用时通过在栈对象的析构函数中释放堆内存的方式，将栈对象的生命周期和堆内存进行绑定），如智能指针，减少裸指针的使用。</li>
+</ul>
+<p>RAII:“资源获取就是初始化”技术，它是由C++之父Bjarne Stroustrup提出的一种资源管理方法，它的核心思想是将资源抽象为类，用局部对象来表示资源（内存是资源的一种），把管理资源的任务转化为管理局部对象的任务。</p>
+<h3 id="如何检测">如何检测</h3>
+<ul>
+<li>静态检测</li>
+<li>动态检测</li>
+</ul>
+<p>参考：
+<a href="https://www.ibm.com/developerworks/cn/linux/l-cn-memleak/index.html">Linux平台下调试c++内存泄露的方法</a>
+<a href="https://zhuanlan.zhihu.com/p/51898119">c++如何避免内存泄露</a></p>
+
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://archillieus.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://archillieus.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://archillieus.github.io/blog/2019-03/c-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>C&#43;&#43;拷贝控制</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+                <a href=https://archillieus.github.io/blog/2019-03/c-%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>C&#43;&#43;内存配置</span>
+                  </div>
+                </a>
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#c%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86">
+												 c&#43;&#43;内存管理
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b">
+												 内存模型
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a0%86%e6%a0%88">
+												 堆栈
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a0%86%e6%a0%88%e7%9a%84%e5%8c%ba%e5%88%ab">
+												 堆栈的区别
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a0%86%e6%a0%88%e7%9a%84%e5%a4%a7%e5%b0%8f">
+												 堆栈的大小
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a0%86%e7%9a%84%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%ad%96%e7%95%a5">
+												 堆的内存分配策略
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a0%86%e6%a0%88%e5%ad%98%e7%9a%84%e5%86%85%e5%ae%b9">
+												 堆栈存的内容
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#buddyslab">
+												 buddy,slab
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#slab%e7%9d%80%e8%89%b2">
+												 slab着色
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%85%e5%ad%98%e6%93%8d%e4%bd%9c%e9%94%99%e8%af%af%e5%8f%8a%e5%af%b9%e7%ad%96">
+												 内存操作错误及对策
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%85%e5%ad%98%e7%a2%8e%e7%89%87">
+												 内存碎片
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#linux%e4%bc%99%e4%bc%b4%e7%b3%bb%e7%bb%9f%e5%8f%8a%e5%86%85%e5%ad%98%e7%a2%8e%e7%89%87%e5%a4%84%e7%90%86">
+												 linux伙伴系统及内存碎片处理
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%85%e5%ad%98%e6%b3%84%e9%9c%b2">
+												 内存泄露
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a6%82%e4%bd%95%e9%81%bf%e5%85%8d">
+												 如何避免
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%a6%82%e4%bd%95%e6%a3%80%e6%b5%8b">
+												 如何检测
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://archillieus.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://archillieus.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://archillieus.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://archillieus.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>

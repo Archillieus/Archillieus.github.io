@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Archillieus">
+  <meta name="description" content="为什么使用智能指针？
+为了解决c&#43;&#43;内存泄露的问题，c&#43;&#43;11引入智能指针。">
+  
+  <meta property="og:title" content="C&#43;&#43;智能指针" />
+<meta property="og:description" content="为什么使用智能指针？
+为了解决c&#43;&#43;内存泄露的问题，c&#43;&#43;11引入智能指针。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://archillieus.github.io/blog/2019-03/c-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2019-03-27T20:14:59&#43;08:00" />
+<meta property="article:modified_time" content="2019-03-27T20:14:59&#43;08:00" />
+
+
+
+
+  <title>
+  
+       C&#43;&#43;智能指针 | Archillieus 
+  
+  </title>
+
+  <link rel="canonical" href="https://archillieus.github.io/blog/2019-03/c-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
+
+  
+  
+
+  
+  <link href="https://archillieus.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://archillieus.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://archillieus.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://archillieus.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://archillieus.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://archillieus.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://archillieus.github.io/img/icon.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://archillieus.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://archillieus.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://archillieus.github.io/">
+          
+        <img class="avatar" src="https://archillieus.github.io/img/icon.png" style="width: 40px!important;height: auto;"  class="d-inline-block align-top" alt="" >
+        
+        <strong> Archillieus</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://archillieus.github.io/">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/moment/" >Moment  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/motto/" >Motto  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://archillieus.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides/bizhi1-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi2-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi5-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://archillieus.github.io/img/header-slides//bizhi6-min.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://archillieus.github.io/">
+          
+            <img class="pull-right avatar avatar-md" src="https://archillieus.github.io/img/profile.jpg" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://archillieus.github.io/">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>Archillieus</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+              <a href="//github.com/you" target="_blank" rel="noopener"><i class="fab fa-github pr-1" aria-hidden="true"></i></a>    
+            
+            
+              <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin pr-1" aria-hidden="true"></i></a>
+            
+
+            
+              <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook pr-1" aria-hidden="true"></i></a>
+            
+
+            
+            <a href="//google.com/you" target="_blank" rel="noopener"><i class="fab fa-google-plus pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter pr-1" aria-hidden="true"></i></a>
+            
+
+            
+                <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+                <a href="//px500" target="_blank" rel="noopener"><i class="fab fa-500px pr-1" aria-hidden="true"></i></a>
+            
+    
+        
+            
+                <a href="mailto:you@email.com"><i class="far fa-envelope-open pr-1" aria-hidden="true"></i></a>
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://archillieus.github.io/categories/it%E6%8A%80%E6%9C%AF"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> IT技术 </a></li>
+      
+    
+    
+      
+        <li><a href="https://archillieus.github.io/series/c&#43;&#43;%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%85%A5%E9%97%A8"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>C&#43;&#43;从入门到入门</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">C&#43;&#43;智能指针</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Mar 27, 2019</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>3 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            <h3 id="为什么使用智能指针">为什么使用智能指针？</h3>
+<p>为了解决c++内存泄露的问题，c++11引入智能指针。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="kt">void</span> <span class="nf">remodel</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">*</span> <span class="n">ps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="p">...</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">weird_thing</span><span class="p">())</span> <span class="c1">//发生异常时，delete不执行导致内存泄漏。
+</span><span class="c1"></span>        <span class="k">throw</span> <span class="n">exception</span><span class="p">();</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="o">*</span><span class="n">ps</span><span class="p">;</span>
+    <span class="k">delete</span> <span class="n">ps</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="智能指针是什么">智能指针是什么？</h3>
+<p>智能指针的原理：接受一个申请好的内存地址，将基本类型指针封装到类，构造一个保存在栈上的智能指针对象，当程序退出栈的作用域范围后，由于栈上的对象自动被销毁，智能指针内部保存的内存也被自动释放掉。在析构函数里面编写delete，利用对象的自动析构达到自动释放内存。</p>
+<h3 id="怎么用">怎么用？</h3>
+<p>在&lt; memory &gt;头文件内提供三种智能指针：<code>shared_ptr</code> <code>unique_ptr</code> <code>weak_ptr</code></p>
+<p><code>shared_ptr</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="nl">std:</span><span class="o">:</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="nf">p1</span><span class="o">(</span><span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="n">1</span><span class="o">));</span><span class="c1">// Person(1)的引用计数为1
+</span><span class="c1"></span><span class="nl">std:</span><span class="o">:</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;(</span><span class="n">2</span><span class="o">);</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">reset</span><span class="o">(</span><span class="k">new</span> <span class="n">Person</span><span class="o">(</span><span class="n">3</span><span class="o">));</span><span class="c1">// 首先生成新对象，然后引用计数减1，引用计数为0，故析构Person(1)
+</span><span class="c1"></span>                        <span class="c1">// 最后将新对象的指针交给智能指针
+</span><span class="c1"></span><span class="nl">std:</span><span class="o">:</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">p1</span><span class="o">;</span><span class="c1">//现在p1和p3同时指向Person(3)，Person(3)的引用计数为2
+</span><span class="c1"></span>
+<span class="n">p1</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span><span class="c1">//Person(3)的引用计数为1
+</span><span class="c1"></span><span class="n">p3</span><span class="o">.</span><span class="na">reset</span><span class="o">();</span><span class="c1">//Person(3)的引用计数为0，析构Person(3)
+</span></code></pre></div><p>注意事项：</p>
+<ul>
+<li>不要用同一个原始指针初始化多个<code>shared_ptr</code>, 会造成二次销毁;</li>
+<li>不要在函数实参创建<code>shared_ptr</code>， 不同编译器参数的计算顺序不同;</li>
+<li>避免循环引用，智能指针的最大陷阱之一，循环引用会导致内存泄漏。</li>
+</ul>
+<p>将unique_ptr转为shared_ptr？</p>
+<h3 id="为什么弃用auto_ptr">为什么弃用auto_ptr？</h3>
+<p><code>auto_ptr</code>和<code>unique_ptr</code>一样使用所有权模型，但是<code>unique_ptr</code>更严格，不允许赋值，赋值操作会导致编译错误，从而避免了内存错误的可能性。总之，弃用auto_ptr：避免潜在的内存奔溃可能。</p>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">auto_ptr</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">T</span> <span class="o">*</span><span class="n">pointee</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">auto_ptr</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:</span> <span class="n">pointee</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span>
+    <span class="n">auto_ptr</span><span class="p">(</span><span class="n">auto_ptr</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="o">:</span> <span class="n">pointee</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">release</span><span class="p">()){}</span>
+    <span class="o">~</span> <span class="n">auto_ptr</span><span class="p">()</span> <span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="n">pointee</span><span class="p">)</span> <span class="k">delete</span><span class="p">(</span><span class="n">pointee</span><span class="p">);}</span>
+
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">U</span><span class="o">&gt;</span>
+    <span class="n">auto_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">auto_ptr</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="o">!=</span> <span class="o">&amp;</span><span class="n">rhs</span><span class="p">)</span> <span class="n">reset</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">release</span><span class="p">());</span> <span class="c1">//剥夺所有权可以避免多次销毁，但是访问rhs会出错。
+</span><span class="c1"></span>        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="o">*</span><span class="n">pointee</span><span class="p">;}</span>
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">pointee</span><span class="p">;}</span>
+    <span class="n">T</span><span class="o">*</span> <span class="nf">get</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="n">pointee</span><span class="p">;}</span>
+    <span class="c1">//...
+</span><span class="c1"></span><span class="p">};</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">auto_ptr</span><span class="o">&lt;</span> <span class="n">string</span><span class="o">&gt;</span> <span class="nf">ps</span> <span class="o">(</span><span class="k">new</span> <span class="n">string</span> <span class="o">(</span><span class="s">&#34;good boy&#34;</span><span class="o">));</span>
+    <span class="n">auto_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">vocation</span><span class="o">;</span>
+    <span class="n">vocaticn</span> <span class="o">=</span> <span class="n">ps</span><span class="o">;</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">ps</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="o">;</span> <span class="c1">//程序崩溃，ps为空指针
+</span><span class="c1"></span><span class="o">}</span>
+</code></pre></div><h3 id="unique_ptr比auto_ptr更智能">unique_ptr比auto_ptr更智能</h3>
+<div class="highlight"><pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">demo</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">temp</span> <span class="p">(</span><span class="k">new</span> <span class="n">string</span> <span class="p">(</span><span class="n">s</span><span class="p">))</span><span class="err">；</span>
+    <span class="k">return</span> <span class="n">temp</span><span class="err">；</span>
+<span class="p">}</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">ps</span><span class="p">;</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">demo</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Uniquely</span> <span class="n">special</span><span class="s">&#34;)； //unique_ptr是临时右值，则编译器允许赋值</span>
+
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">pu1</span><span class="p">(</span><span class="k">new</span> <span class="n">string</span> <span class="p">(</span><span class="s">&#34;hello world&#34;</span><span class="p">));</span>
+<span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">pu2</span><span class="p">;</span>
+<span class="n">pu2</span> <span class="o">=</span> <span class="n">pu1</span><span class="p">;</span>                                      <span class="c1">// #1 not allowed
+</span><span class="c1"></span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">pu3</span><span class="p">;</span>
+<span class="n">pu3</span> <span class="o">=</span> <span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">string</span> <span class="p">(</span><span class="s">&#34;You&#34;</span><span class="p">));</span>   <span class="c1">// #2 allowed
+</span></code></pre></div><h3 id="选择哪一种智能指针">选择哪一种智能指针？</h3>
+<p>STL容器包含指针时，可使用<code>shared_ptr</code>，因为stl算法一般都支持拷贝和赋值操作。
+如果函数使用new分配内存，并返回指针，则将返回类型声明为<code>unique_ptr</code>是不错的选择。
+boost库提供shared_ptr(类似), scoped_ptr(类似unique_ptr)</p>
+<h3 id="智能指针是多线程安全的吗">智能指针是多线程安全的吗？</h3>
+<p><a href="https://www.cnblogs.com/Solstice/archive/2013/01/28/2879366.html">多线程读写shared_ptr加锁</a>
+<a href="https://beamnote.com/2014/is-shared-ptr-thread-safe/">shared_ptr是否线程安全</a></p>
+<h3 id="智能指针是异常安全的吗">智能指针是异常安全的吗？</h3>
+<h3 id="有没有引用计数更好的方法">有没有引用计数更好的方法？</h3>
+<h3 id="高级使用">高级使用</h3>
+<p><code>shared_ptr</code>支持定制型删除器（custom deleter），可防范 Cross-DLL 问题（对象在动态链接库（DLL）中被 new 创建，却在另一个 DLL 内被 delete 销毁）、自动解除互斥锁</p>
+<p>参考：</p>
+<p><a href="http://www.cnblogs.com/lanxuezaipiao/p/4132096.html">http://www.cnblogs.com/lanxuezaipiao/p/4132096.html</a>
+<a href="http://blog.jobbole.com/104666/">常见使用错误</a></p>
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://archillieus.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://archillieus.github.io/tags/c&#43;&#43;" role="button">C&#43;&#43; </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://archillieus.github.io/blog/2019-03/c-%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>C&#43;&#43;内存配置</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+                <a href=https://archillieus.github.io/blog/2019-03/c-%E5%A4%9A%E6%80%81/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>C&#43;&#43;多态</span>
+                  </div>
+                </a>
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e4%bd%bf%e7%94%a8%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88">
+												 为什么使用智能指针？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e6%98%af%e4%bb%80%e4%b9%88">
+												 智能指针是什么？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%80%8e%e4%b9%88%e7%94%a8">
+												 怎么用？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e5%bc%83%e7%94%a8auto_ptr">
+												 为什么弃用auto_ptr？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#unique_ptr%e6%af%94auto_ptr%e6%9b%b4%e6%99%ba%e8%83%bd">
+												 unique_ptr比auto_ptr更智能
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%80%89%e6%8b%a9%e5%93%aa%e4%b8%80%e7%a7%8d%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88">
+												 选择哪一种智能指针？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e6%98%af%e5%a4%9a%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e5%90%97">
+												 智能指针是多线程安全的吗？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e6%98%af%e5%bc%82%e5%b8%b8%e5%ae%89%e5%85%a8%e7%9a%84%e5%90%97">
+												 智能指针是异常安全的吗？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%9c%89%e6%b2%a1%e6%9c%89%e5%bc%95%e7%94%a8%e8%ae%a1%e6%95%b0%e6%9b%b4%e5%a5%bd%e7%9a%84%e6%96%b9%e6%b3%95">
+												 有没有引用计数更好的方法？
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%ab%98%e7%ba%a7%e4%bd%bf%e7%94%a8">
+												 高级使用
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+  
+  <div class="pb-2 mt-5 pt-5">
+    
+      <a href="//github.com/you " target="_blank" rel="noopener"><i class="fab fa-github mr-3" aria-hidden="true"></i></a>    
+    
+    
+      <a href="//linkedin.com/in/you" target="_blank" rel="noopener"><i class="fab fa-linkedin-in mr-3" aria-hidden="true"></i></a>
+    
+
+    
+      <a href="//facebook.com/you" target="_blank" rel="noopener"><i class="fab fa-facebook-f mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+        <a href="//twitter.com/you" target="_blank" rel="noopener"><i class="fab fa-twitter mr-3" aria-hidden="true"></i></a>
+    
+
+    
+        <a href="//instagram.com/you" target="_blank" rel="noopener"><i class="fab fa-instagram mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+
+    
+        <a href="mailto:you@email.com"><i class="far fa-envelope-open mr-3" aria-hidden="true"></i></a>
+    
+
+    
+
+    
+
+  </div>
+  
+
+  
+  <div class="copyright py-4">
+    
+      Powered by <a href='https://gohugo.io/'>Hugo</a> | Theme - <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by Orianna
+    </span>
+    <br>
+    <span>
+      2017 - 2021 &copy; Archillieus
+    </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://archillieus.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://archillieus.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://archillieus.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://archillieus.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://archillieus.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>

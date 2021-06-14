@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>工具库 on Archillieus</title>
+    <link>https://archillieus.github.io/tags/%E5%B7%A5%E5%85%B7%E5%BA%93/</link>
+    <description>Recent content in 工具库 on Archillieus</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Thu, 13 Jun 2019 21:16:00 +0800</lastBuildDate><atom:link href="https://archillieus.github.io/tags/%E5%B7%A5%E5%85%B7%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开发工具Gflags,Glog,Protobuf</title>
+      <link>https://archillieus.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/</link>
+      <pubDate>Thu, 13 Jun 2019 21:16:00 +0800</pubDate>
+      
+      <guid>https://archillieus.github.io/blog/2019-06/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7gflagsglogprotobuf/</guid>
+      <description>&lt;p&gt;GFlags是Google开源的一个命令行flag（区别于参数）库。简单来说就是在使用命令行时，可以根据名称设置参数。Google Glog是Google的一个开源库，用于实现应用级别的日志，相比较log4系列的日志系统，它更加轻巧灵活，而且功能也比较完善。Google Protocol Buffer(简称 Protobuf)是Google公司内部的混合语言数据标准。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
